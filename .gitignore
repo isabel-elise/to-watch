@@ -1,0 +1,24 @@
+# Logs
+to-watch_front-end/logs
+to-watch_front-end/*.log
+to-watch_front-end/npm-debug.log*
+to-watch_front-end/yarn-debug.log*
+to-watch_front-end/yarn-error.log*
+to-watch_front-end/pnpm-debug.log*
+to-watch_front-end/lerna-debug.log*
+
+to-watch_front-end/node_modules
+to-watch_front-end/dist
+to-watch_front-end/dist-ssr
+to-watch_front-end/*.local
+
+# Editor directories and files
+to-watch_front-end/.vscode/*
+to-watch_front-end/!.vscode/extensions.json
+to-watch_front-end/.idea
+to-watch_front-end/.DS_Store
+to-watch_front-end/*.suo
+to-watch_front-end/*.ntvs*
+to-watch_front-end/*.njsproj
+to-watch_front-end/*.sln
+to-watch_front-end/*.sw?
