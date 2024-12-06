@@ -22,3 +22,5 @@ to-watch_front-end/*.ntvs*
 to-watch_front-end/*.njsproj
 to-watch_front-end/*.sln
 to-watch_front-end/*.sw?
+
+*storybook.log
