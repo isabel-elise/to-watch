@@ -12,10 +12,8 @@ def getMovieInfo(movie_id):
 
 @app.route("/reorder/<list_id>/<movie_id>/<operation>", methods=["POST"])
 def reorderElement(list_id, movie_id, operation):
-
     if operation not in ["up", "down", "first", "last"]:
         abort(400) # Bad request
-
     return f"<p> Reordering, on list \"{list_id}\", the movie \"{movie_id}\" with the operation \"{operation}\" </p>"
 
 @app.route("/getOrder/<list_id>")
@@ -24,7 +22,5 @@ def getListOrder(list_id):
 
 @app.route("/setOrder/<list_id>", methods=["POST"])
 def setListOrder(list_id):
-
     data = request.get_json()
-
     return f"<p>Setting list order for \"{list_id}\", with json = {data} </p>"
