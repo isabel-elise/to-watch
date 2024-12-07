@@ -1,6 +1,6 @@
 from imdb import Cinemagoer
 
-def imdbSearch(title):
+def imdbSearchMultipleMovies(title):
     ia = Cinemagoer()
     search_result = ia.search_movie(title)
 
@@ -34,3 +34,7 @@ def imdbSearch(title):
             returnVal[i]["full-size cover url"] = None
 
     return returnVal
+
+def imdbSearchSingleMovie(imdbID):
+    ia = Cinemagoer()
+    movie = ia.get_movie(imdbID)

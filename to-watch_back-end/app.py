@@ -1,5 +1,5 @@
 from flask import Flask, request, abort
-from imdbSearch import imdbSearch
+from imdbSearch import imdbSearchMultipleMovies
 
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def search(query_term):
     - full-size cover url
     - imdbID
     """
-    return imdbSearch(query_term)
+    return imdbSearchMultipleMovies(query_term)
 
 @app.route("/movie/<movie_id>")
 def getMovieInfo(movie_id):
