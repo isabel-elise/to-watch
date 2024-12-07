@@ -1,10 +1,12 @@
 from flask import Flask, request, abort
+from imdbSearch import imdbSearch
 
 app = Flask(__name__)
 
-@app.route("/search/<query_term>")
+@app.route("/imdbsearch/<query_term>")
+@app.route("/imdbSearch/<query_term>")
 def search(query_term):
-    return f"<p>Searching for \"{query_term}\" </p>"
+    return imdbSearch(query_term)
 
 @app.route("/movie/<movie_id>")
 def getMovieInfo(movie_id):
