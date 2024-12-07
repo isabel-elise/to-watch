@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ def getMovieInfo(movie_id):
 def reorderElement(list_id, movie_id, operation):
 
     if operation not in ["up", "down", "first", "last"]:
-        return f"<p>Invalid operation \"{operation}\" </p>"
+        abort(400) # Bad request
 
     return f"<p> Reordering, on list \"{list_id}\", the movie \"{movie_id}\" with the operation \"{operation}\" </p>"
 
