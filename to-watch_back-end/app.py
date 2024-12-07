@@ -6,6 +6,17 @@ app = Flask(__name__)
 @app.route("/imdbsearch/<query_term>")
 @app.route("/imdbSearch/<query_term>")
 def search(query_term):
+    """
+    Search for a movie in IMDB
+
+    Keys:
+    - title
+    - year
+    - kind
+    - cover url
+    - full-size cover url
+    - imdbID
+    """
     return imdbSearch(query_term)
 
 @app.route("/movie/<movie_id>")
