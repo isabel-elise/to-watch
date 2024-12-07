@@ -1,0 +1,32 @@
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-card-container {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.buttons-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.change-order-button {
+  color: #232323;
+  transition: transform 0.5s;
+}
+
+.change-order-button:hover {
+  color: #078080;
+  transform: scale(1.5);
+}
+
+.change-order-button:active {
+  color: #f45d48;
+}

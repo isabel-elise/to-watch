@@ -1,6 +1,7 @@
 import "./movieCard.css";
 
 export interface MovieCardProps {
+  id: string;
   title: string;
   year: number;
   kind: string;
@@ -10,6 +11,7 @@ export interface MovieCardProps {
 }
 
 export function MovieCard({
+  id,
   title,
   year,
   kind,
@@ -18,7 +20,7 @@ export function MovieCard({
   watched,
 }: MovieCardProps) {
   return (
-    <div className="card-container">
+    <div className="card-container" key={id}>
       <header className="card-header">
         <h1>{title}</h1>
         <h1 className="imdb-score">{imdbRating}</h1>
