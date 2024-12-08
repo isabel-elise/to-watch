@@ -1,7 +1,7 @@
 from imdb import Cinemagoer
 
-def imdbSearchMultipleMovies(title):
-    ia = Cinemagoer()
+def imdbSearchMultipleMovies(title, ia=Cinemagoer()):
+    
     search_result = ia.search_movie(title)
 
     returnVal = [dict() for _ in range(len(search_result))]
