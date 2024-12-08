@@ -37,3 +37,7 @@ def getListOrder(list_id):
 def setListOrder(list_id):
     data = request.get_json()
     return f"<p>Setting list order for \"{list_id}\", with json = {data} </p>"
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
