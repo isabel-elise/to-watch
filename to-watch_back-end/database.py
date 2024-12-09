@@ -1,7 +1,7 @@
 class DatabaseException(Exception):
     pass
 
-class dbInterface():
+class dbInterface(): # pragma: no cover
     def __init__(self):
         pass
 

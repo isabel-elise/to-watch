@@ -3,3 +3,4 @@ cinemagoer
 SQLAlchemy
 pytest
 coverage
+pytest-cov

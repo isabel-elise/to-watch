@@ -29,3 +29,5 @@ to-watch_back-end/venv
 to-watch_back-end/__pycache__
 
 towatch.db
+
+.coverage
