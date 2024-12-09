@@ -10,7 +10,7 @@ from database import dbInterface, DatabaseException
 Base = declarative_base()
 
 class Movie(Base):
-    __tablename__ = 'movies'
+    __tablename__ = "movies"
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
@@ -21,7 +21,7 @@ class Movie(Base):
     rating = Column(Float, nullable=True)
 
 class List(Base):
-    __tablename__ = 'lists'
+    __tablename__ = "lists"
 
     id = Column(Integer, primary_key=True)
     name = Column(String)

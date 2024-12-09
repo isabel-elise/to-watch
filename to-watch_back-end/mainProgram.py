@@ -1,5 +1,5 @@
 from imdbSearch import imdbSearcher
-from database import dbInterface
+from database import dbInterface, DatabaseException
 from databaseSQLAlchemy import dbInterfaceSQLAlchemy
 
 class mainProgram:
