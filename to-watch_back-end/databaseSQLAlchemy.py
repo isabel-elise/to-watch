@@ -60,13 +60,16 @@ class dbInterfaceSQLAlchemy(dbInterface):
         Get the movie info from the database
         """
         movie = self.session.query(Movie).filter(Movie.id == movie_id).first()
+        if movie is None:
+            raise DatabaseException("Movie id not found")
         return {
             "id": movie.id,
             "title": movie.title,
             "year": movie.year,
             "kind": movie.kind,
             "cover_url": movie.cover_url,
-            "imdb_id": movie.imdb_id
+            "imdb_id": movie.imdb_id,
+            "rating": movie.rating
             }
 
     def setMovieTitle(self, movie_id:int, title:str):

@@ -18,5 +18,6 @@ class mainProgram:
         - cover url
         - full-size cover url
         - imdbID
+        - rating
         """
         return self.imdbSearcher.imdbSearchMultipleMovies(query_term)
