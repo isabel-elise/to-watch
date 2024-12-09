@@ -1,23 +1,12 @@
 from flask import Flask, request, abort
-from imdbSearch import imdbSearchMultipleMovies
+from interfaceFrontend import interfaceFrontend
 
 app = Flask(__name__)
 
 @app.route("/imdbsearch/<query_term>")
 @app.route("/imdbSearch/<query_term>")
 def search(query_term):
-    """
-    Search for a movie in IMDB
-
-    Keys:
-    - title
-    - year
-    - kind
-    - cover url
-    - full-size cover url
-    - imdbID
-    """
-    return imdbSearchMultipleMovies(query_term)
+    return interfaceFrontend().imdbSearchMultipleMovies(query_term)
 
 @app.route("/movie/<movie_id>")
 def getMovieInfo(movie_id):
