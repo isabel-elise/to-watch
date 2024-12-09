@@ -1,3 +1,5 @@
 Flask
 cinemagoer
 SQLAlchemy
+pytest
+coverage
