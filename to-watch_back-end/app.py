@@ -1,12 +1,12 @@
 from flask import Flask, request, abort
-from interfaceFrontend import interfaceFrontend
+from mainProgram import mainProgram
 
 app = Flask(__name__)
 
 @app.route("/imdbsearch/<query_term>")
 @app.route("/imdbSearch/<query_term>")
 def search(query_term):
-    return interfaceFrontend().imdbSearchMultipleMovies(query_term)
+    return mainProgram().imdbSearchMultipleMovies(query_term)
 
 @app.route("/movie/<movie_id>")
 def getMovieInfo(movie_id):

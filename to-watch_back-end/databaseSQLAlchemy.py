@@ -29,7 +29,10 @@ class List(Base):
 
 
 class dbInterfaceSQLAlchemy(dbInterface):
-    def __init__(self, engine="sqlite:///towatch.db"):
+    def __init__(self, engine):
+        """
+        Initialize the database interface with the given engine
+        """
         self.engine = create_engine(engine)
         Base.metadata.create_all(self.engine)
         self.Session = sessionmaker(bind=self.engine)
