@@ -1,3 +1,6 @@
+class DatabaseException(Exception):
+    pass
+
 class dbInterface():
     def __init__(self):
         pass
@@ -23,15 +26,21 @@ class dbInterface():
 
     def getAllMoviesIds(self):
         raise NotImplementedError
-
-    # def reorderElement(self, list_id, movie_id, operation):
-    #     raise NotImplementedError
     
-    # def getListOrder(self, list_id):
-    #     raise NotImplementedError
+
+
+    def createNewList(self, list_name):
+        raise NotImplementedError
+
+    def getAllListsIds(self):
+        raise NotImplementedError
     
-    # def setListOrder(self, list_id, newOrder):
-    #     raise NotImplementedError
-
-
+    def setListName(self, list_id:int, list_name:str):
+        raise NotImplementedError   
+    def getListName(self, list_id:int):
+        raise NotImplementedError
+    def setListOrder(self, list_id:int, order:list[int]):
+        raise NotImplementedError
+    def getListOrder(self, list_id:int):
+        raise NotImplementedError
 

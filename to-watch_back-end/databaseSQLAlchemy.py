@@ -1,7 +1,11 @@
 from sqlalchemy import Column, Integer, String, Float, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+from json import dumps, loads
+from database import dbInterface, DatabaseException
 
-from database import dbInterface
+
+
+
 
 Base = declarative_base()
 
@@ -16,11 +20,17 @@ class Movie(Base):
     imdb_id = Column(String, nullable=True)
     rating = Column(Float, nullable=True)
 
+class List(Base):
+    __tablename__ = 'lists'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    order = Column(String)
 
 
 class dbInterfaceSQLAlchemy(dbInterface):
-    def __init__(self, createTable=False):
-        self.engine = create_engine('sqlite:///towatch.db')
+    def __init__(self, engine="sqlite:///towatch.db"):
+        self.engine = create_engine(engine)
         Base.metadata.create_all(self.engine)
         self.Session = sessionmaker(bind=self.engine)
         self.session = self.Session()
@@ -59,37 +69,37 @@ class dbInterfaceSQLAlchemy(dbInterface):
     def setMovieTitle(self, movie_id:int, title:str):
         movie = self.session.query(Movie).filter(Movie.id == movie_id).first()
         if movie is None:
-            raise Exception("Movie id not found")
+            raise DatabaseException("Movie id not found")
         movie.title = title
         self.session.commit()
     def setMovieYear(self, movie_id:int, year:int):
         movie = self.session.query(Movie).filter(Movie.id == movie_id).first()
         if movie is None:
-            raise Exception("Movie id not found")
+            raise DatabaseException("Movie id not found")
         movie.year = year
         self.session.commit()
     def setMovieKind(self, movie_id:int, kind:str):
         movie = self.session.query(Movie).filter(Movie.id == movie_id).first()
         if movie is None:
-            raise Exception("Movie id not found")
+            raise DatabaseException("Movie id not found")
         movie.kind = kind
         self.session.commit()
     def setMovieCoverUrl(self, movie_id:int, cover_url:str):
         movie = self.session.query(Movie).filter(Movie.id == movie_id).first()
         if movie is None:
-            raise Exception("Movie id not found")
+            raise DatabaseException("Movie id not found")
         movie.cover_url = cover_url
         self.session.commit()
     def setMovieImdbID(self, movie_id:int, imdb_id:str):
         movie = self.session.query(Movie).filter(Movie.id == movie_id).first()
         if movie is None:
-            raise Exception("Movie id not found")
+            raise DatabaseException("Movie id not found")
         movie.imdb_id = imdb_id
         self.session.commit()
     def setMovieRating(self, movie_id:int, rating:float):
         movie = self.session.query(Movie).filter(Movie.id == movie_id).first()
         if movie is None:
-            raise Exception("Movie id not found")
+            raise DatabaseException("Movie id not found")
         movie.rating = rating
         self.session.commit()
 
@@ -100,4 +110,47 @@ class dbInterfaceSQLAlchemy(dbInterface):
         movies = self.session.query(Movie).all()
         return {movie.id for movie in movies}
 
-dbInterfaceSQLAlchemy()
+
+
+    def createNewList(self, list_name):
+        newList = List(name=list_name, order=dumps([]))
+        self.session.add(newList)
+        self.session.commit()
+        return newList.id
+
+    def getAllListsIds(self):
+        lists = self.session.query(List).all()
+        return {list.id for list in lists}
+
+    def setListName(self, list_id:int, list_name:str):
+        list = self.session.query(List).filter(List.id == list_id).first()
+        if list is None:
+            raise DatabaseException("List id not found")
+        list.name = list_name
+        self.session.commit()
+    def getListName(self, list_id:int):
+        list = self.session.query(List).filter(List.id == list_id).first()
+        if list is None:
+            raise DatabaseException("List id not found")
+        return list.name
+    def setListOrder(self, list_id:int, order:list[int]):
+        list = self.session.query(List).filter(List.id == list_id).first()
+        if list is None:
+            raise DatabaseException("List id not found")
+        list.order = dumps(order)
+        self.session.commit()
+    def getListOrder(self, list_id:int):
+        list = self.session.query(List).filter(List.id == list_id).first()
+        if list is None:
+            raise DatabaseException("List id not found")
+        return loads(list.order)
+
+
+
+
+
+
+
+
+
+
