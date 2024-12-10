@@ -41,3 +41,48 @@ class imdbSearcher:
 
     def imdbSearchSingleMovie(self, imdbID):
         movie = self.ia.get_movie(imdbID)
+        returnVal = dict()
+
+        returnVal["imdbID"] = movie.getID()
+
+        try:
+            returnVal["title"] = movie["title"]
+        except:
+            returnVal["title"] = None
+
+        try:
+            returnVal["year"] = movie["year"]
+        except KeyError:
+            returnVal["year"] = None
+
+        try:
+            returnVal["kind"] = movie["kind"]
+        except KeyError:
+            returnVal["kind"] = None
+
+        try:
+            returnVal["cover url"] = movie["cover url"]
+        except KeyError:
+            returnVal["cover url"] = None
+
+        try:
+            returnVal["full-size cover url"] = movie["full-size cover url"]
+        except KeyError:
+            returnVal["full-size cover url"] = None
+        
+        try:
+            returnVal["rating"] = movie["rating"]
+        except KeyError:
+            returnVal["rating"] = None
+        
+        try:
+            returnVal["genres"] = movie["genres"]
+        except KeyError:
+            returnVal["genres"] = None
+        
+        try:
+            returnVal["plot outline"] = movie["plot outline"]
+        except KeyError:
+            returnVal["plot outline"] = None
+        
+        return returnVal
