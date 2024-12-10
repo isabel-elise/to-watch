@@ -1,5 +1,5 @@
 from imdbSearch import imdbSearcher
-from database import dbInterface, DatabaseException
+from database import dbInterface
 from databaseSQLAlchemy import dbInterfaceSQLAlchemy
 
 class MainProgramException(Exception):
@@ -42,10 +42,10 @@ class mainProgram:
         return self.imdbSearcher.imdbSearchSingleMovie(imdbID)
     
     def getMovieInfo(self, movie_id:int):
-        try:
-            return self.db.getMovieInfo(movie_id=movie_id)
-        except DatabaseException as e:
-            raise MainProgramException(str(e))
+        if movie_id not in self.db.getAllMoviesIds():
+            raise MainProgramException("Movie id not found")
+        return self.db.getMovieInfo(movie_id=movie_id)
+
 
     def createNewMovie(self, title:str, year:int=None, kind:str=None, cover_url:str=None, imdb_id:str=None, rating:float=None):
         return self.db.createNewMovie(title=title, year=year, kind=kind, cover_url=cover_url, imdb_id=imdb_id, rating=rating)
@@ -68,15 +68,22 @@ class mainProgram:
             self.db.setMovieRating(movie_id=movie_id, rating=rating)
 
     def getListInfo(self, list_id:int):
-        try:
-            name = self.db.getListName(list_id=list_id)
-            order = self.db.getListOrder(list_id=list_id)
-            return {"name":name, "order":order}
-        except DatabaseException as e:
-            raise MainProgramException(str(e))
+        
+        if list_id not in self.db.getAllListsIds():
+            raise MainProgramException("List id not found")
+
+        name = self.db.getListName(list_id=list_id)
+        order = self.db.getListOrder(list_id=list_id)
+        return {"name":name, "order":order}
+
 
     def createNewList(self, list_name:str):
         return self.db.createNewList(list_name=list_name)
+
+    def editListName(self, new_list_name:str, list_id:int):
+        if list_id not in self.db.getAllListsIds():
+            raise MainProgramException("List id not found")
+        self.db.setListName(list_id=list_id, list_name=new_list_name)
 
     def putMovieOnList(self, movie_id:int, list_id:int):
 
@@ -90,9 +97,9 @@ class mainProgram:
         if movie_id in order:
             raise MainProgramException("Movie already in list")
 
-        self.db.setListOrder(list_id=list_id, order=newOrder)
         newOrder = order.copy()
         newOrder.append(movie_id)
+        self.db.setListOrder(list_id=list_id, order=newOrder)
 
     def setNewOrderOnList(self, list_id:int, newOrder:list[int]):
         if list_id not in self.db.getAllListsIds():
@@ -104,8 +111,13 @@ class mainProgram:
         dictNew = dict()
 
         for indice in oldOrder:
-            dictNew[indice] += 1
+            if indice not in dictOld:
+                dictOld[indice] = 0
+            dictOld[indice] += 1
+
         for indice in newOrder:
+            if indice not in dictNew:
+                dictNew[indice] = 0
             dictNew[indice] += 1
         
         if dictOld != dictNew:
@@ -116,6 +128,10 @@ class mainProgram:
     def reorderSingleMovieOnList(self, movie_id:int, operation:str, list_id:int):
         if operation not in ["up", "down", "first", "last"]:
             raise MainProgramException("Invalid operation")
+        if list_id not in self.db.getAllListsIds():
+            raise MainProgramException("List id not found")
+        if movie_id not in self.db.getAllMoviesIds():
+            raise MainProgramException("Movie id not found")
 
         currentOrder:list[int] = self.db.getListOrder(list_id)
         
@@ -126,7 +142,7 @@ class mainProgram:
                 break
         
         if position == -1:
-            raise MainProgramException("Movie not found on list")
+            raise MainProgramException("Movie is not on list")
 
         if operation == "up" and position == 0:
             raise MainProgramException("Movie is already at the top of the list")
