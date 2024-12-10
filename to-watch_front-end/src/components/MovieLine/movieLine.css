@@ -1,0 +1,19 @@
+.line-container {
+  display: flex;
+  width: 360px;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.line-text {
+  color: #000;
+  font-family: Kadwa;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}

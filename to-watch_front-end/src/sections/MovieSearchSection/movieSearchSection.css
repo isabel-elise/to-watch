@@ -1,0 +1,49 @@
+.search-results-container {
+  display: flex;
+  height: 200px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+p {
+  display: inline-block;
+  margin: 0;
+}
+
+.search-result {
+  display: flex;
+  width: 360px;
+  padding: 8px 14px;
+  align-items: flex-start;
+  gap: 8px;
+  color: #f8f5f2;
+  font-family: Kadwa;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 8px;
+  background: #078080;
+  transition: background 0.5s;
+}
+
+.search-result:hover {
+  background: #f45d48;
+}
+
+.selected-movie-container {
+  display: flex;
+  height: 252px;
+  padding: 6px 18px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-movie-buttons {
+  width: 351px;
+  height: 36px;
+}
