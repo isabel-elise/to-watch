@@ -4,6 +4,7 @@ import {
   MovieCard,
   MovieCardProps,
 } from "../../components/MovieCard/MovieCard";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import "./movieSearchSection.css";
 
@@ -27,6 +28,8 @@ export function MovieSearchSection({
   const [selectedMovie, setSelectedMovie] = useState("");
   const [movieCard, setMovieCard] = useState<MovieCardProps>();
 
+  const [parent] = useAutoAnimate();
+
   useEffect(() => {
     if (selectedMovie !== "") {
       onGetMovie(selectedMovie).then((result) => setMovieCard(result));
@@ -34,7 +37,7 @@ export function MovieSearchSection({
   }, [selectedMovie, onGetMovie]);
 
   return (
-    <section>
+    <section className="movie-search-section">
       <SearchBar
         onSearchMovie={(keyword: string) =>
           onSearchMovie(keyword).then(
@@ -42,7 +45,7 @@ export function MovieSearchSection({
           )
         }
       />
-      <section className="search-results-container">
+      <section className="search-results-container" ref={parent}>
         {searchResults.map((result) => (
           <div
             key={result.imdbID}
@@ -60,9 +63,10 @@ export function MovieSearchSection({
       </section>
       <section className="add-movie-buttons">
         <button
-          title="Adicionar entrada"
           onClick={() => isMovieCard(movieCard) && onAddMovieToWatch(movieCard)}
-        />
+        >
+          Adicionar entrada
+        </button>
       </section>
     </section>
   );

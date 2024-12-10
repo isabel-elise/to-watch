@@ -4,6 +4,7 @@ import { RiArrowUpSLine } from "react-icons/ri";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { RiArrowDownDoubleLine } from "react-icons/ri";
 import { IconContext } from "react-icons";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import "./movieCardList.css";
 
@@ -16,11 +17,12 @@ export function MovieCardList({
   movieCardList: list,
   onChangeListOrder,
 }: MovieCardListProps) {
+  const [parent] = useAutoAnimate();
   return (
-    <div className="list-container">
+    <div className="list-container" ref={parent}>
       {list.map((entry) => {
         return (
-          <div className="list-card-container">
+          <div className="list-card-container" key={entry.id}>
             <MovieCard {...entry} />
             <IconContext.Provider
               value={{ size: "1.25em", className: "change-order-button" }}

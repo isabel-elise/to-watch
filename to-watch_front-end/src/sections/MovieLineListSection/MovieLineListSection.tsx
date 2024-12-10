@@ -1,5 +1,6 @@
 import { MovieCardProps } from "../../components/MovieCard/MovieCard";
 import { MovieLine } from "../../components/MovieLine/MovieLine";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import "./movieLineListSection.css";
 
@@ -8,8 +9,9 @@ interface MovieLineListSectionProps {
 }
 
 export function MovieLineListSection({ movieList }: MovieLineListSectionProps) {
+  const [parent] = useAutoAnimate();
   return (
-    <section className="movie-line-list-section">
+    <section className="movie-line-list-section" ref={parent}>
       {movieList.map((movie) => {
         return (
           <MovieLine
