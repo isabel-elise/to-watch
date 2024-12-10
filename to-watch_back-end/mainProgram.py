@@ -18,6 +18,22 @@ class mainProgram:
         - cover url
         - full-size cover url
         - imdbID
-        - rating
         """
         return self.imdbSearcher.imdbSearchMultipleMovies(query_term)
+
+    def imdbSearchSingleMovie(self, imdbID:str):
+        """
+        Search for a movie in IMDB, returns dict
+
+        Keys:
+        - title
+        - year
+        - kind
+        - cover url
+        - full-size cover url
+        - imdbID
+        - rating
+        - genres
+        - plot outline
+        """
+        return self.imdbSearcher.imdbSearchSingleMovie(imdbID)

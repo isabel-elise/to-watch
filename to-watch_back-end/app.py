@@ -3,10 +3,13 @@ from mainProgram import mainProgram
 
 app = Flask(__name__)
 
-@app.route("/imdbsearch/<query_term>")
-@app.route("/imdbSearch/<query_term>")
-def search(query_term):
+@app.route("/imdbmultisearch/<query_term>")
+def multisearch(query_term):
     return mainProgram().imdbSearchMultipleMovies(query_term)
+
+@app.route("/imdbsinglesearch/<imdbID>")
+def singlesearch(imdbID:str):
+    return mainProgram().imdbSearchSingleMovie(str(imdbID))
 
 @app.route("/movie/<movie_id>")
 def getMovieInfo(movie_id):
