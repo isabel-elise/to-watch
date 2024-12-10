@@ -1,0 +1,17 @@
+.search-bar-container {
+  display: flex;
+  width: 360px;
+  padding: 7px 12px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  background: #fff;
+}
+
+input {
+  width: 100%;
+  border-width: 0;
+  outline: none;
+  margin-right: 12px;
+  font-family: Kadwa;
+}
