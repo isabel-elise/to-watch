@@ -2,6 +2,9 @@ import pytest
 from databaseSQLAlchemy import dbInterfaceSQLAlchemy, DatabaseException
 from database import dbInterface
 
+# coverage run -m pytest ./to-watch_back-end/test_database.py 
+# coverage report
+
 class TestDatabase:
     @pytest.fixture(autouse=True)
     def setup__and_teardown(self):
