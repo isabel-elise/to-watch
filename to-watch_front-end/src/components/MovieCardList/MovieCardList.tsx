@@ -1,4 +1,4 @@
-import { MovieCard, MovieCardProps } from "../MovieCard/MovieCard";
+import { MovieCard } from "../MovieCard/MovieCard";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { RiArrowUpSLine } from "react-icons/ri";
 import { RiArrowDownSLine } from "react-icons/ri";
@@ -7,10 +7,11 @@ import { IconContext } from "react-icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import "./movieCardList.css";
+import { MovieEntry } from "../../interfaces";
 
 interface MovieCardListProps {
-  movieCardList: MovieCardProps[];
-  onChangeListOrder: (movieId: string, operation: string) => void;
+  movieCardList: MovieEntry[];
+  onChangeListOrder: (index: number, operation: string) => void;
 }
 
 export function MovieCardList({
@@ -20,7 +21,7 @@ export function MovieCardList({
   const [parent] = useAutoAnimate();
   return (
     <div className="list-container" ref={parent}>
-      {list.map((entry) => {
+      {list.map((entry, index) => {
         return (
           <div className="list-card-container" key={entry.id}>
             <MovieCard {...entry} />
@@ -28,18 +29,26 @@ export function MovieCardList({
               value={{ size: "1.25em", className: "change-order-button" }}
             >
               <section className="buttons-section">
-                <RiArrowUpDoubleLine
-                  onClick={() => onChangeListOrder(entry.id, "first")}
-                />
-                <RiArrowUpSLine
-                  onClick={() => onChangeListOrder(entry.id, "up")}
-                />
-                <RiArrowDownSLine
-                  onClick={() => onChangeListOrder(entry.id, "down")}
-                />
-                <RiArrowDownDoubleLine
-                  onClick={() => onChangeListOrder(entry.id, "last")}
-                />
+                {index !== 0 && (
+                  <>
+                    <RiArrowUpDoubleLine
+                      onClick={() => onChangeListOrder(index, "first")}
+                    />
+                    <RiArrowUpSLine
+                      onClick={() => onChangeListOrder(index, "up")}
+                    />
+                  </>
+                )}
+                {index !== list.length - 1 && (
+                  <>
+                    <RiArrowDownSLine
+                      onClick={() => onChangeListOrder(index, "down")}
+                    />
+                    <RiArrowDownDoubleLine
+                      onClick={() => onChangeListOrder(index, "last")}
+                    />
+                  </>
+                )}
               </section>
             </IconContext.Provider>
           </div>

@@ -1,11 +1,11 @@
-import { MovieCardProps } from "../../components/MovieCard/MovieCard";
 import { MovieLine } from "../../components/MovieLine/MovieLine";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { MovieEntry } from "../../interfaces";
 
 import "./movieLineListSection.css";
 
 interface MovieLineListSectionProps {
-  movieList: MovieCardProps[];
+  movieList: MovieEntry[];
 }
 
 export function MovieLineListSection({ movieList }: MovieLineListSectionProps) {
@@ -16,7 +16,7 @@ export function MovieLineListSection({ movieList }: MovieLineListSectionProps) {
         return (
           <MovieLine
             name={movie.title}
-            imdbRating={movie.imdbRating}
+            imdbRating={movie.rating}
             key={movie.id}
           />
         );

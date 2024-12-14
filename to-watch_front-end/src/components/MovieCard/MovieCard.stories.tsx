@@ -12,13 +12,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    id: "2580046",
+    id: 2580046,
     title: "Miraculous: Tales of Ladybug & Cat Noir",
     year: 2015,
     kind: "tv series",
     coverUrl:
       "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
-    imdbRating: 7.5,
-    watched: false,
+    imdbID: "2580046",
+    rating: 7.5,
   },
 };

@@ -1,22 +1,44 @@
 import { useEffect, useState } from "react";
-import { SearchBar, SearchResult } from "../../components/SearchBar/SearchBar";
-import {
-  MovieCard,
-  MovieCardProps,
-} from "../../components/MovieCard/MovieCard";
+import { SearchBar } from "../../components/SearchBar/SearchBar";
+import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import "./movieSearchSection.css";
+import { RiAddLine } from "react-icons/ri";
+import {
+  MovieEntry,
+  SearchMultipleMoviesResult,
+  SearchSingleMovieResult,
+} from "../../interfaces";
 
 interface MovieSearchSectionProps {
-  onSearchMovie: (keyword: string) => Promise<SearchResult[]>;
-  onGetMovie: (imdbID: string) => Promise<MovieCardProps>;
-  onAddMovieToWatch: (movie: MovieCardProps) => void;
+  onSearchMovie: (keyword: string) => Promise<SearchMultipleMoviesResult[]>;
+  onGetMovie: (imdbID: string) => Promise<SearchSingleMovieResult>;
+  onAddMovieToWatch: (movie: MovieEntry) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isMovieCard(object: any): object is MovieCardProps {
-  return !object ? false : "imdbRating" in object;
+function isMovieEntry(object: object | undefined): object is MovieEntry {
+  if (object && "imdbID" in object && "id" in object) return true;
+  return false;
+}
+
+function isValidSearchResult(
+  object: object | undefined
+): object is SearchSingleMovieResult {
+  if (object && "imdbID" in object) return true;
+  return false;
+}
+
+function searchResultToEntry(searchResult: SearchSingleMovieResult) {
+  return {
+    id: 0,
+    title: searchResult.title,
+    year: Number(searchResult.year),
+    kind: searchResult.kind,
+    coverUrl: searchResult.coverUrl,
+    imdbID: searchResult.imdbID,
+    rating: Number(searchResult.imdbID),
+  };
 }
 
 export function MovieSearchSection({
@@ -24,15 +46,21 @@ export function MovieSearchSection({
   onGetMovie,
   onAddMovieToWatch,
 }: MovieSearchSectionProps) {
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searchResults, setSearchResults] = useState<
+    SearchMultipleMoviesResult[]
+  >([]);
   const [selectedMovie, setSelectedMovie] = useState("");
-  const [movieCard, setMovieCard] = useState<MovieCardProps>();
+  const [movieCard, setMovieCard] = useState<MovieEntry>();
 
   const [parent] = useAutoAnimate();
 
   useEffect(() => {
     if (selectedMovie !== "") {
-      onGetMovie(selectedMovie).then((result) => setMovieCard(result));
+      onGetMovie(selectedMovie).then(
+        (result) =>
+          isValidSearchResult(result) &&
+          setMovieCard(searchResultToEntry(result))
+      );
     }
   }, [selectedMovie, onGetMovie]);
 
@@ -59,13 +87,15 @@ export function MovieSearchSection({
         ))}
       </section>
       <section className="selected-movie-container">
-        {isMovieCard(movieCard) ? <MovieCard {...movieCard} /> : <></>}
+        {isMovieEntry(movieCard) ? <MovieCard {...movieCard} /> : <></>}
       </section>
       <section className="add-movie-buttons">
         <button
-          onClick={() => isMovieCard(movieCard) && onAddMovieToWatch(movieCard)}
+          onClick={() =>
+            isMovieEntry(movieCard) && onAddMovieToWatch(movieCard)
+          }
         >
-          Adicionar entrada
+          Adicionar <RiAddLine color="#F8F5F2" size="1.8em" />
         </button>
       </section>
     </section>

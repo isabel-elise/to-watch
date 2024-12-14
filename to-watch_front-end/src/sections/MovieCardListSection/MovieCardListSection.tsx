@@ -1,11 +1,11 @@
-import { MovieCardProps } from "../../components/MovieCard/MovieCard";
 import { MovieCardList } from "../../components/MovieCardList/MovieCardList";
+import { MovieEntry } from "../../interfaces";
 
 import "./movieCardListSection.css";
 
 interface MovieCardListSectionProps {
-  movieList: MovieCardProps[];
-  onChangeListOrder: (movieId: string, operation: string) => void;
+  movieList: MovieEntry[];
+  onChangeListOrder: (index: number, operation: string) => void;
 }
 
 export function MovieCardListSection({

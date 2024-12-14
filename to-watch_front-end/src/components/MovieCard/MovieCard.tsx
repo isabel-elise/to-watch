@@ -1,14 +1,5 @@
+import { MovieEntry } from "../../interfaces";
 import "./movieCard.css";
-
-export interface MovieCardProps {
-  id: string;
-  title: string;
-  year: number;
-  kind: string;
-  coverUrl: string;
-  imdbRating: number;
-  watched: boolean;
-}
 
 export function MovieCard({
   id,
@@ -16,14 +7,13 @@ export function MovieCard({
   year,
   kind,
   coverUrl,
-  imdbRating,
-  watched,
-}: MovieCardProps) {
+  rating,
+}: MovieEntry) {
   return (
     <div className="card-container" key={id}>
       <header className="card-header">
         <h1>{title}</h1>
-        <h1 className="imdb-score">{imdbRating}</h1>
+        <h1 className="imdb-score">{rating}</h1>
       </header>
       <section className="card-body">
         <img src={coverUrl} />
@@ -33,9 +23,6 @@ export function MovieCard({
             <br />
             {year}
           </h2>
-          <h3 className={watched ? "watched-text" : "not-watched-text"}>
-            {watched ? "Assistido" : "Não assistido"}
-          </h3>
         </section>
       </section>
     </div>
