@@ -163,5 +163,9 @@ class mainProgram:
 
         self.db.setListOrder(list_id, newOrder)
 
-    
+    def getListCompleteMovieData(self, list_id:int):
+        if list_id not in self.db.getAllListsIds():
+            raise MainProgramException("List id not found")
+        order = self.db.getListOrder(list_id=list_id)
+        return [self.db.getMovieInfo(movie_id) for movie_id in order]
 

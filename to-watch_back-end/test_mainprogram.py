@@ -280,6 +280,15 @@ class TestMainProgram:
             self.main.setNewOrderOnList(1, [idMovie1])
         assert str(e.value) == "List id not found"
 
+    def test_user_can_request_complete_list_info(self):
+        idList = self.main.createNewList(list_name="any list")
+        idMovie1 = self.main.createNewMovie(title="movie 1", year=2000, kind="movie", cover_url="http://example.com/cover", imdb_id="1234567", rating=8.5)
+        idMovie2 = self.main.createNewMovie(title="movie 2", year=2001, kind="tv series", cover_url="http://example.com/cover2", imdb_id="7654321", rating=5.8)
+        self.main.putMovieOnList(idMovie1, idList)
+        self.main.putMovieOnList(idMovie2, idList)
+        listInfo = self.main.getListCompleteMovieData(idList)
+        assert listInfo[0]["id"] == idMovie1 and listInfo[0]["year"] == 2000 and listInfo[0]["kind"] == "movie" and listInfo[0]["cover_url"] == "http://example.com/cover" and listInfo[0]["imdb_id"] == "1234567" and listInfo[0]["rating"] == 8.5
+        assert listInfo[1]["id"] == idMovie2 and listInfo[1]["year"] == 2001 and listInfo[1]["kind"] == "tv series" and listInfo[1]["cover_url"] == "http://example.com/cover2" and listInfo[1]["imdb_id"] == "7654321" and listInfo[1]["rating"] == 5.8
 
 
 
