@@ -290,5 +290,8 @@ class TestMainProgram:
         assert listInfo[0]["id"] == idMovie1 and listInfo[0]["year"] == 2000 and listInfo[0]["kind"] == "movie" and listInfo[0]["cover_url"] == "http://example.com/cover" and listInfo[0]["imdb_id"] == "1234567" and listInfo[0]["rating"] == 8.5
         assert listInfo[1]["id"] == idMovie2 and listInfo[1]["year"] == 2001 and listInfo[1]["kind"] == "tv series" and listInfo[1]["cover_url"] == "http://example.com/cover2" and listInfo[1]["imdb_id"] == "7654321" and listInfo[1]["rating"] == 5.8
 
-
+    def test_user_cant_request_complete_list_info_on_invalid_list(self):
+        with pytest.raises(MainProgramException) as e:
+            self.main.getListCompleteMovieData(1)
+        assert str(e.value) == "List id not found"
 
