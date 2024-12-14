@@ -5,7 +5,7 @@ Um pequeno sistema para gerenciamento de listas de filmes / séries a assistir a
 ## Membros do grupo
 
 - Isabel Elise Silva Duque
-- Lucas Rios Bicalho (teste commit)
+- Lucas Rios Bicalho
 
 ## Funcionalidades
 
