@@ -7,3 +7,19 @@
   margin: 0;
   background-color: #1e1e1e;
 }
+
+button {
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-family: Kadwa;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 8px;
+  border-width: 0;
+}

@@ -67,22 +67,6 @@ p {
   height: 36px;
 }
 
-button {
-  display: flex;
-  padding: 8px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  color: #fff;
-  font-family: Kadwa;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  border-radius: 8px;
-  border-width: 0;
-}
-
 button#add-movie {
   background: #f45d48;
 }
