@@ -43,6 +43,8 @@ um pacote Python para recuperação e gerenciamento de dados do banco de dados d
 
 Os testes foram feitos através das bibliotecas [pytest](https://pypi.org/project/pytest/) e [coverage](https://pypi.org/project/coverage/), e são executados no Ubuntu, MacOS e Windows, pelo Github Actions.
 
+Além disso, a cobertura também é testada através do [Codecov](app.codecov.io).
+
 ### Sistema de banco de dados de listas e filmes
 
 Sistema de banco de dados é usado através de uma classe de interface.
