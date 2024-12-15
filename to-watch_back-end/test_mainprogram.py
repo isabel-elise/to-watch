@@ -64,6 +64,45 @@ class TestMainProgram:
             self.main.putMovieOnList(idMovie, 1)
         assert str(e.value) == "List id not found"
     
+    def test_user_can_remove_movie_from_list(self):
+        idList = self.main.createNewList(list_name="any list")
+        idMovie = self.main.createNewMovie(title="any movie")
+        self.main.putMovieOnList(idMovie, idList)
+        self.main.removeMovieFromList(idMovie, idList)
+        order = self.main.getListInfo(idList)["order"]
+        assert len(order) == 0
+    
+    def test_user_can_remove_movie_from_list_with_multiple_movies(self):
+        idList = self.main.createNewList(list_name="any list")
+        idMovie1 = self.main.createNewMovie(title="movie 1")
+        idMovie2 = self.main.createNewMovie(title="movie 2")
+        idMovie3 = self.main.createNewMovie(title="movie 3")
+        self.main.putMovieOnList(idMovie1, idList)
+        self.main.putMovieOnList(idMovie2, idList)
+        self.main.putMovieOnList(idMovie3, idList)
+        self.main.removeMovieFromList(idMovie2, idList)
+        order = self.main.getListInfo(idList)["order"]
+        assert len(order) == 2
+    
+    def test_user_cant_remove_invalid_movie_from_list(self):
+        idList = self.main.createNewList(list_name="any list")
+        with pytest.raises(MainProgramException) as e:
+            self.main.removeMovieFromList(1, idList)
+        assert str(e.value) == "Movie id not found"
+    
+    def test_user_cant_remove_movie_from_invalid_list(self):
+        idMovie = self.main.createNewMovie(title="any movie")
+        with pytest.raises(MainProgramException) as e:
+            self.main.removeMovieFromList(idMovie, 1)
+        assert str(e.value) == "List id not found"
+    
+    def test_user_cant_remove_movie_from_list_that_doesnt_have_it(self):
+        idList = self.main.createNewList(list_name="any list")
+        idMovie = self.main.createNewMovie(title="any movie")
+        with pytest.raises(MainProgramException) as e:
+            self.main.removeMovieFromList(idMovie, idList)
+        assert str(e.value) == "Movie not in list"
+
     def test_new_movie_insertion_always_happens_at_end_of_list(self):
         idList = self.main.createNewList(list_name="any list")
         idMovie1 = self.main.createNewMovie(title="movie 1")
@@ -301,3 +340,4 @@ class TestMainProgram:
         idsAndNames = self.main.getAllListsIdsAndNamesInDatabase()
         assert {"id":idList1, "name":"any list"} in idsAndNames
         assert {"id":idList2, "name":"another list"} in idsAndNames
+

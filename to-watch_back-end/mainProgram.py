@@ -100,6 +100,20 @@ class mainProgram:
         newOrder = order.copy()
         newOrder.append(movie_id)
         self.db.setListOrder(list_id=list_id, order=newOrder)
+    
+    def removeMovieFromList(self, movie_id:int, list_id:int):
+        if list_id not in self.db.getAllListsIds():
+            raise MainProgramException("List id not found")
+        if movie_id not in self.db.getAllMoviesIds():
+            raise MainProgramException("Movie id not found")
+        if movie_id not in self.db.getListOrder(list_id=list_id):
+            raise MainProgramException("Movie not in list")
+
+        order = self.db.getListOrder(list_id=list_id)
+
+        newOrder = order.copy()
+        newOrder.remove(movie_id)
+        self.db.setListOrder(list_id=list_id, order=newOrder)
 
     def setNewOrderOnList(self, list_id:int, newOrder:list[int]):
         if list_id not in self.db.getAllListsIds():
