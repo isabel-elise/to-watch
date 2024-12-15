@@ -22,3 +22,9 @@ export interface MovieEntry {
   imdbID: string;
   rating: number;
 }
+
+export interface MovieList {
+  id: number;
+  name: string;
+  entries: MovieEntry[];
+}

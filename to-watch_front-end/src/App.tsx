@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 
 import "./App.css";
 import { MovieSearchSection } from "./sections/MovieSearchSection/MovieSearchSection";
-import { MovieLineListSection } from "./sections/MovieLineListSection/MovieLineListSection";
+import {
+  MovieLineListSection,
+  MovieLineListSectionProps,
+} from "./sections/MovieLineListSection/MovieLineListSection";
 import { MovieCardListSection } from "./sections/MovieCardListSection/MovieCardListSection";
 import { MovieEntry } from "./interfaces";
+import { fn } from "@storybook/test";
 
 function App({ searchMovie, getMovie, changeListOrder, mockList1 }) {
-  const [currentMovieList, setCurrentMovieList] = useState<MovieEntry[]>([]);
+  const [currentMovieList, setCurrentMovieList] =
+    useState<MovieLineListSectionProps>();
 
   useEffect(() => {
     setCurrentMovieList(mockList1);
@@ -17,18 +22,32 @@ function App({ searchMovie, getMovie, changeListOrder, mockList1 }) {
       <MovieSearchSection
         onSearchMovie={searchMovie}
         onGetMovie={getMovie}
-        onAddMovieToWatch={(card: MovieEntry) =>
+        onAddMovie={(card: MovieEntry) =>
           alert("Adicionando " + card.title + " na lista")
         }
+        onAddList={fn}
       />
-      <MovieLineListSection movieList={currentMovieList} />
-      <MovieCardListSection
-        movieList={currentMovieList}
-        onChangeListOrder={(index, operation) => {
-          const newList = changeListOrder(currentMovieList, index, operation);
-          setCurrentMovieList(newList);
-        }}
-      />
+
+      {currentMovieList && <MovieLineListSection {...currentMovieList} />}
+      {currentMovieList && (
+        <MovieCardListSection
+          movieList={currentMovieList?.currentList.entries}
+          onChangeListOrder={(index, operation) => {
+            const newList = changeListOrder(
+              currentMovieList.currentList.entries,
+              index,
+              operation
+            );
+            setCurrentMovieList({
+              ...currentMovieList,
+              currentList: {
+                ...currentMovieList.currentList,
+                entries: newList,
+              },
+            });
+          }}
+        />
+      )}
     </div>
   );
 }

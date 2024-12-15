@@ -32,7 +32,7 @@ export function SearchBar({
           }
         }}
       />
-      <RiSearchLine />
+      <RiSearchLine onClick={() => onSearchMovie(searchText)} />
     </div>
   );
 }

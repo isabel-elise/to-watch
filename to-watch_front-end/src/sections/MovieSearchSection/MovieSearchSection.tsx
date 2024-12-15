@@ -4,7 +4,7 @@ import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import "./movieSearchSection.css";
-import { RiAddLine } from "react-icons/ri";
+import { RiAddCircleLine, RiAddLine } from "react-icons/ri";
 import {
   MovieEntry,
   SearchMultipleMoviesResult,
@@ -14,7 +14,8 @@ import {
 interface MovieSearchSectionProps {
   onSearchMovie: (keyword: string) => Promise<SearchMultipleMoviesResult[]>;
   onGetMovie: (imdbID: string) => Promise<SearchSingleMovieResult>;
-  onAddMovieToWatch: (movie: MovieEntry) => void;
+  onAddMovie: (movie: MovieEntry) => void;
+  onAddList: (name: string) => void;
 }
 
 function isMovieEntry(object: object | undefined): object is MovieEntry {
@@ -44,13 +45,16 @@ function searchResultToEntry(searchResult: SearchSingleMovieResult) {
 export function MovieSearchSection({
   onSearchMovie,
   onGetMovie,
-  onAddMovieToWatch,
+  onAddMovie,
+  onAddList,
 }: MovieSearchSectionProps) {
   const [searchResults, setSearchResults] = useState<
     SearchMultipleMoviesResult[]
   >([]);
   const [selectedMovie, setSelectedMovie] = useState("");
   const [movieCard, setMovieCard] = useState<MovieEntry>();
+  const [listCreationActive, setListCreationActive] = useState(false);
+  const [newListName, setNewListname] = useState("");
 
   const [parent] = useAutoAnimate();
 
@@ -89,15 +93,44 @@ export function MovieSearchSection({
       <section className="selected-movie-container">
         {isMovieEntry(movieCard) ? <MovieCard {...movieCard} /> : <></>}
       </section>
-      <section className="add-movie-buttons">
-        <button
-          onClick={() =>
-            isMovieEntry(movieCard) && onAddMovieToWatch(movieCard)
-          }
-        >
-          Adicionar <RiAddLine color="#F8F5F2" size="1.8em" />
-        </button>
-      </section>
+
+      {!listCreationActive ? (
+        <section className="add-buttons">
+          <button id="create-list" onClick={() => setListCreationActive(true)}>
+            Criar nova lista <RiAddCircleLine color="#F8F5F2" size="1.8em" />
+          </button>
+          <button
+            id="add-movie"
+            onClick={() => isMovieEntry(movieCard) && onAddMovie(movieCard)}
+          >
+            Adicionar entrada <RiAddLine color="#F8F5F2" size="1.8em" />
+          </button>
+        </section>
+      ) : (
+        <section className="add-buttons">
+          <input
+            id="list-name-input"
+            type="text"
+            placeholder="Insira um nome para a nova lista"
+            value={newListName}
+            onChange={(e) => setNewListname(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+              }
+            }}
+          />
+          <button
+            id="add-list"
+            onClick={() => {
+              alert("Adicionando nova lista: " + newListName);
+              onAddList(newListName);
+            }}
+          >
+            <RiAddCircleLine color="#F8F5F2" size="1.8em" />
+          </button>
+        </section>
+      )}
     </section>
   );
 }

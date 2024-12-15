@@ -13,11 +13,14 @@
 
 .search-results-container {
   display: flex;
-  height: 200px;
+  height: 160px;
   flex-direction: column;
   align-items: flex-start;
   margin-top: 10px;
   gap: 8px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #078080 #232323;
 }
 
 p {
@@ -56,7 +59,10 @@ p {
   gap: 10px;
 }
 
-.add-movie-buttons {
+.add-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   width: 351px;
   height: 36px;
 }
@@ -75,9 +81,34 @@ button {
   line-height: normal;
   border-radius: 8px;
   border-width: 0;
+}
+
+button#add-movie {
   background: #f45d48;
 }
 
-button:hover {
+button#add-movie:hover {
+  background: #696969;
+}
+
+button#create-list {
   background: #078080;
+}
+
+button#create-list:hover {
+  background: #696969;
+}
+
+button#add-list {
+  border-radius: 16px;
+  background: #078080;
+}
+
+button#add-list:hover {
+  background: #696969;
+}
+
+#list-name-input {
+  border-radius: 16px;
+  padding-left: 12px;
 }
