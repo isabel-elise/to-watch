@@ -7,6 +7,7 @@ import {
 import { MovieLineListSectionProps } from "./sections/MovieLineListSection/MovieLineListSection";
 
 export const mockList1 = {
+  onAddList: fn(),
   onSelectList: fn(),
   avaiableLists: [
     { id: 9090, name: "Lista 1" },

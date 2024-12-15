@@ -12,7 +12,12 @@ import { fn } from "@storybook/test";
 
 function App({ searchMovie, getMovie, changeListOrder, mockList1 }) {
   const [currentMovieList, setCurrentMovieList] =
-    useState<MovieLineListSectionProps>();
+    useState<MovieLineListSectionProps>({
+      currentList: { id: 0, name: "", entries: [] },
+      avaiableLists: [],
+      onSelectList: fn(),
+      onSaveList: fn(),
+    });
 
   useEffect(() => {
     setCurrentMovieList(mockList1);
@@ -27,27 +32,25 @@ function App({ searchMovie, getMovie, changeListOrder, mockList1 }) {
         }
         onAddList={fn}
       />
-
-      {currentMovieList && <MovieLineListSection {...currentMovieList} />}
-      {currentMovieList && (
-        <MovieCardListSection
-          movieList={currentMovieList?.currentList.entries}
-          onChangeListOrder={(index, operation) => {
-            const newList = changeListOrder(
-              currentMovieList.currentList.entries,
-              index,
-              operation
-            );
-            setCurrentMovieList({
-              ...currentMovieList,
-              currentList: {
-                ...currentMovieList.currentList,
-                entries: newList,
-              },
-            });
-          }}
-        />
-      )}
+      <MovieLineListSection {...currentMovieList} />
+      <MovieCardListSection
+        movieList={currentMovieList?.currentList.entries}
+        onChangeListOrder={(index, operation) => {
+          const newList = changeListOrder(
+            currentMovieList.currentList.entries,
+            index,
+            operation
+          );
+          setCurrentMovieList({
+            ...currentMovieList,
+            currentList: {
+              ...currentMovieList.currentList,
+              entries: newList,
+            },
+          });
+        }}
+      />
+      )
     </div>
   );
 }

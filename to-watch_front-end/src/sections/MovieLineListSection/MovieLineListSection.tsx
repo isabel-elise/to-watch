@@ -22,7 +22,7 @@ export function MovieLineListSection({
   return (
     <section className="movie-line-list-section">
       <header className="movie-line-list-header">
-        <div>{currentList.name}</div>
+        <div>{currentList && currentList.name}</div>
         <button
           id="save-list"
           onClick={() => {
@@ -37,32 +37,35 @@ export function MovieLineListSection({
         </button>
       </header>
       <section className="movie-line-list" ref={parent}>
-        {currentList.entries.map((movie) => {
-          return (
-            <MovieLine
-              name={movie.title}
-              imdbRating={movie.rating}
-              key={movie.id}
-            />
-          );
-        })}
+        {currentList &&
+          currentList.entries.map((movie) => {
+            return (
+              <MovieLine
+                name={movie.title}
+                imdbRating={movie.rating}
+                key={movie.id}
+              />
+            );
+          })}
       </section>
       <footer className="movie-line-list-footer">
-        {avaiableLists.map((list) => {
-          return (
-            <button
-              key={list.id}
-              className={
-                "select-list" + (currentList.id === list.id ? " selected" : "")
-              }
-              onClick={() =>
-                list.id !== currentList.id && onSelectList(list.id)
-              }
-            >
-              {list.name}
-            </button>
-          );
-        })}
+        {avaiableLists &&
+          avaiableLists.map((list) => {
+            return (
+              <button
+                key={list.id}
+                className={
+                  "select-list" +
+                  (currentList.id === list.id ? " selected" : "")
+                }
+                onClick={() =>
+                  list.id !== currentList.id && onSelectList(list.id)
+                }
+              >
+                {list.name}
+              </button>
+            );
+          })}
       </footer>
     </section>
   );
