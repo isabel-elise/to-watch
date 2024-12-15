@@ -9,8 +9,9 @@ import {
 import { MovieCardListSection } from "./sections/MovieCardListSection/MovieCardListSection";
 import { MovieEntry } from "./interfaces";
 import { fn } from "@storybook/test";
+import { searchMultipleMovies } from "./requests";
 
-function App({ searchMovie, getMovie, changeListOrder, mockList1 }) {
+function App({ getMovie, changeListOrder, mockList1 }) {
   const [currentMovieList, setCurrentMovieList] =
     useState<MovieLineListSectionProps>({
       currentList: { id: 0, name: "", entries: [] },
@@ -25,7 +26,7 @@ function App({ searchMovie, getMovie, changeListOrder, mockList1 }) {
   return (
     <div className="main-screen">
       <MovieSearchSection
-        onSearchMovie={searchMovie}
+        onSearchMovie={searchMultipleMovies}
         onGetMovie={getMovie}
         onAddMovie={(card: MovieEntry) =>
           alert("Adicionando " + card.title + " na lista")

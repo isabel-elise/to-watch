@@ -10,9 +10,10 @@ import {
   SearchMultipleMoviesResult,
   SearchSingleMovieResult,
 } from "../../interfaces";
+import { searchMultipleMovies } from "../../requests";
 
 interface MovieSearchSectionProps {
-  onSearchMovie: (keyword: string) => Promise<SearchMultipleMoviesResult[]>;
+  onSearchMovie: (keyword: string) => Promise<Response>;
   onGetMovie: (imdbID: string) => Promise<SearchSingleMovieResult>;
   onAddMovie: (movie: MovieEntry) => void;
   onAddList: (name: string) => void;
@@ -72,9 +73,12 @@ export function MovieSearchSection({
     <section className="movie-search-section">
       <SearchBar
         onSearchMovie={(keyword: string) =>
-          onSearchMovie(keyword).then(
-            (results) => results && results.length && setSearchResults(results)
-          )
+          onSearchMovie(keyword)
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              setSearchResults(data);
+            })
         }
       />
       <section className="search-results-container" ref={parent}>

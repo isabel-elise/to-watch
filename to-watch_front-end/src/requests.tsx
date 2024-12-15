@@ -1,6 +1,6 @@
 import { MovieEntry } from "./interfaces";
 
-const api = "htttp://127.0.0.1:5000";
+const api = "http://127.0.0.1:5000";
 
 export interface movieData {
   title: string;
