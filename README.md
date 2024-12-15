@@ -39,6 +39,11 @@ Também foi aplicada a ferramenta [StoryBook](https://storybook.js.org/) para a 
 Os dados do IMDb são obtidos através da biblioteca [Cinemagoer](https://cinemagoer.github.io/),
 um pacote Python para recuperação e gerenciamento de dados do banco de dados do IMDb sobre filmes, séries e pessoas.
 
-### Gerenciamento da lista ordenada
+### Testes do backend
 
-...
+Os testes foram feitos através das bibliotecas [pytest](https://pypi.org/project/pytest/) e [coverage](https://pypi.org/project/coverage/), e são executados no Ubuntu, MacOS e Windows, pelo Github Actions.
+
+### Sistema de banco de dados de listas e filmes
+
+Sistema de banco de dados é usado através de uma classe de interface.
+A implementação dessa interface foi feita através de [SQLAlchemy](https://www.sqlalchemy.org/), utilizando-se da engine de [SQLite](https://www.sqlite.org/) para gerar um banco de dados local na execução usual e a engine de memória para gerar um banco de dados temporário para fins de testes de unidade.

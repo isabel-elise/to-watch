@@ -169,3 +169,6 @@ class mainProgram:
         order = self.db.getListOrder(list_id=list_id)
         return [self.db.getMovieInfo(movie_id) for movie_id in order]
 
+    def getAllListsIdsAndNamesInDatabase(self):
+        ids = self.db.getAllListsIds()
+        return [{"id":id, "name":self.db.getListName(list_id=id)} for id in ids]

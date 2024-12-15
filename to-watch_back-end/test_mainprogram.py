@@ -295,3 +295,9 @@ class TestMainProgram:
             self.main.getListCompleteMovieData(1)
         assert str(e.value) == "List id not found"
 
+    def test_user_can_request_every_list_name(self):
+        idList1 = self.main.createNewList(list_name="any list")
+        idList2 = self.main.createNewList(list_name="another list")
+        idsAndNames = self.main.getAllListsIdsAndNamesInDatabase()
+        assert {"id":idList1, "name":"any list"} in idsAndNames
+        assert {"id":idList2, "name":"another list"} in idsAndNames
