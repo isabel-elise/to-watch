@@ -1,7 +1,9 @@
 from flask import Flask, request, abort
+from flask_cors import CORS
 from mainProgram import mainProgram, MainProgramException
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/test")
