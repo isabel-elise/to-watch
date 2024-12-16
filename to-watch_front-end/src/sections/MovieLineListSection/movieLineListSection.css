@@ -38,15 +38,21 @@ button#save-list:hover {
 
 .movie-line-list {
   display: flex;
+  max-height: 25vw;
   padding: 13px 2px;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   align-self: stretch;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #078080 #232323;
 }
 
 .movie-line-list-footer {
+  width: 100%;
   display: flex;
+  flex-wrap: wrap;
   padding: 10px;
   justify-content: center;
   align-items: center;

@@ -18,24 +18,24 @@ export const Default: Story = {
   args: {
     movieList: [
       {
-        id: "2580046",
+        id: 2580046,
+        imdb_id: "2580046",
         title: "Miraculous: Tales of Ladybug & Cat Noir",
         year: 2015,
         kind: "tv series",
-        coverUrl:
+        cover_url:
           "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
-        imdbRating: 7.5,
-        watched: false,
+        rating: 7.5,
       },
       {
-        id: " 3431758",
+        id: 3431758,
+        imdb_id: "3431758",
         title: "No Game, No Life",
         year: 2014,
         kind: "tv series",
-        coverUrl:
+        cover_url:
           "https://m.media-amazon.com/images/M/MV5BOTk5ZDZhNGUtMDM2OS00Y2RkLWEwMmQtODg4ZTZiMGY1ZjFjXkEyXkFqcGc@.jpg",
-        imdbRating: 7.6,
-        watched: false,
+        rating: 7.6,
       },
     ],
   },

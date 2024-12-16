@@ -49,6 +49,10 @@ p {
   background: #f45d48;
 }
 
+.search-result:active {
+  background: #696969;
+}
+
 .selected-movie-container {
   display: flex;
   height: 252px;

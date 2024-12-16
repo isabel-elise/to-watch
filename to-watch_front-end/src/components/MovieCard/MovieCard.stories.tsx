@@ -16,9 +16,9 @@ export const Default: Story = {
     title: "Miraculous: Tales of Ladybug & Cat Noir",
     year: 2015,
     kind: "tv series",
-    coverUrl:
+    cover_url:
       "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
-    imdbID: "2580046",
+    imdb_id: "2580046",
     rating: 7.5,
   },
 };

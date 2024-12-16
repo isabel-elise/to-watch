@@ -3,8 +3,8 @@ export interface SearchMultipleMoviesResult {
   title: string;
   year: string;
   kind: string;
-  coverUrl: string;
-  fullSizeCoverUrl: string;
+  "cover url": string;
+  "full-size cover url": string;
 }
 
 export interface SearchSingleMovieResult extends SearchMultipleMoviesResult {
@@ -18,8 +18,8 @@ export interface MovieEntry {
   title: string;
   year: number;
   kind: string;
-  coverUrl: string;
-  imdbID: string;
+  cover_url: string;
+  imdb_id: string;
   rating: number;
 }
 
@@ -27,4 +27,9 @@ export interface MovieList {
   id: number;
   name: string;
   entries: MovieEntry[];
+}
+
+export interface ListData {
+  id: number;
+  name: string;
 }

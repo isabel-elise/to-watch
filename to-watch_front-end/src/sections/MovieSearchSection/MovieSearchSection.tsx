@@ -10,24 +10,16 @@ import {
   SearchMultipleMoviesResult,
   SearchSingleMovieResult,
 } from "../../interfaces";
-import { searchMultipleMovies } from "../../requests";
 
 interface MovieSearchSectionProps {
   onSearchMovie: (keyword: string) => Promise<Response>;
-  onGetMovie: (imdbID: string) => Promise<SearchSingleMovieResult>;
+  onGetMovie: (imdbID: string) => Promise<Response>;
   onAddMovie: (movie: MovieEntry) => void;
   onAddList: (name: string) => void;
 }
 
 function isMovieEntry(object: object | undefined): object is MovieEntry {
-  if (object && "imdbID" in object && "id" in object) return true;
-  return false;
-}
-
-function isValidSearchResult(
-  object: object | undefined
-): object is SearchSingleMovieResult {
-  if (object && "imdbID" in object) return true;
+  if (object && "imdb_id" in object && "id" in object) return true;
   return false;
 }
 
@@ -37,9 +29,9 @@ function searchResultToEntry(searchResult: SearchSingleMovieResult) {
     title: searchResult.title,
     year: Number(searchResult.year),
     kind: searchResult.kind,
-    coverUrl: searchResult.coverUrl,
-    imdbID: searchResult.imdbID,
-    rating: Number(searchResult.imdbID),
+    cover_url: searchResult["full-size cover url"],
+    imdb_id: searchResult.imdbID,
+    rating: Number(searchResult.rating),
   };
 }
 
@@ -61,11 +53,9 @@ export function MovieSearchSection({
 
   useEffect(() => {
     if (selectedMovie !== "") {
-      onGetMovie(selectedMovie).then(
-        (result) =>
-          isValidSearchResult(result) &&
-          setMovieCard(searchResultToEntry(result))
-      );
+      onGetMovie(selectedMovie)
+        .then((response) => response.json())
+        .then((data) => setMovieCard(searchResultToEntry(data)));
     }
   }, [selectedMovie, onGetMovie]);
 
@@ -86,7 +76,7 @@ export function MovieSearchSection({
           <div
             key={result.imdbID}
             className="search-result"
-            onMouseEnter={() => setSelectedMovie(result.imdbID)}
+            onClick={() => setSelectedMovie(result.imdbID)}
           >
             <p>{result.title}</p>
             <p>{result.year}</p>
@@ -121,14 +111,18 @@ export function MovieSearchSection({
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
+                onAddList(newListName);
+                setListCreationActive(false);
+                setNewListname("");
               }
             }}
           />
           <button
             id="add-list"
             onClick={() => {
-              alert("Adicionando nova lista: " + newListName);
               onAddList(newListName);
+              setListCreationActive(false);
+              setNewListname("");
             }}
           >
             <RiAddCircleLine color="#F8F5F2" size="1.8em" />

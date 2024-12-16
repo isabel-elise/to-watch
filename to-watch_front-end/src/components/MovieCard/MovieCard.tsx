@@ -6,7 +6,7 @@ export function MovieCard({
   title,
   year,
   kind,
-  coverUrl,
+  cover_url,
   rating,
 }: MovieEntry) {
   return (
@@ -16,7 +16,7 @@ export function MovieCard({
         <h1 className="imdb-score">{rating}</h1>
       </header>
       <section className="card-body">
-        <img src={coverUrl} />
+        <img src={cover_url} />
         <section className="card-data">
           <h2>
             {kind}

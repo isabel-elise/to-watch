@@ -1,18 +1,16 @@
-import { MovieEntry } from "./interfaces";
-
 const api = "http://127.0.0.1:5000";
 
 export interface movieData {
   title: string;
   year: number;
   kind: string;
-  coverUrl: string;
-  imdbID: string;
+  cover_url: string;
+  imdb_id: string;
   rating: number;
 }
 
 export function getAvaiableLists() {
-  const avaiableLists = fetch(`${api}/lists/`, {
+  const avaiableLists = fetch(`${api}/lists`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -45,18 +43,18 @@ export function searchMultipleMovies(keyword: string) {
 }
 
 export function searchSingleMovie(imdbID: string) {
-  const movieData = fetch(`${api}/get_movie/${imdbID}`, {
+  const movieSearchResult = fetch(`${api}/get_movie/${imdbID}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  return movieData;
+  return movieSearchResult;
 }
 
 export function addMovieToList(movieEntry: movieData, listID: number) {
-  const movieData = fetch(`${api}/add_movie/${listID}`, {
+  const currentList = fetch(`${api}/add_movie/${listID}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -64,27 +62,29 @@ export function addMovieToList(movieEntry: movieData, listID: number) {
     body: JSON.stringify(movieEntry),
   });
 
-  return movieData;
+  return currentList;
 }
 
 export function addList(name: string) {
-  const movieData = fetch(`${api}/add_list`, {
+  const avaiableLists = fetch(`${api}/add_list`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: name }),
+    body: JSON.stringify({ list_name: name }),
   });
 
-  return movieData;
+  return avaiableLists;
 }
 
-export function saveList(entries: MovieEntry[], listID: number) {
-  fetch(`${api}/save_list/${listID}`, {
+export function saveList(listID: number, order: number[]) {
+  const response = fetch(`${api}/save_list/${listID}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(entries),
+    body: JSON.stringify({ order: order }),
   });
+
+  return response;
 }

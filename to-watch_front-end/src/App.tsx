@@ -2,56 +2,102 @@ import { useEffect, useState } from "react";
 
 import "./App.css";
 import { MovieSearchSection } from "./sections/MovieSearchSection/MovieSearchSection";
-import {
-  MovieLineListSection,
-  MovieLineListSectionProps,
-} from "./sections/MovieLineListSection/MovieLineListSection";
+import { MovieLineListSection } from "./sections/MovieLineListSection/MovieLineListSection";
 import { MovieCardListSection } from "./sections/MovieCardListSection/MovieCardListSection";
-import { MovieEntry } from "./interfaces";
-import { fn } from "@storybook/test";
-import { searchMultipleMovies } from "./requests";
+import { ListData, MovieEntry } from "./interfaces";
+import {
+  addList,
+  addMovieToList,
+  getAvaiableLists,
+  getListEntries,
+  saveList,
+  searchMultipleMovies,
+  searchSingleMovie,
+} from "./requests";
+import { changeListOrder } from "./methods";
 
-function App({ getMovie, changeListOrder, mockList1 }) {
-  const [currentMovieList, setCurrentMovieList] =
-    useState<MovieLineListSectionProps>({
-      currentList: { id: 0, name: "", entries: [] },
-      avaiableLists: [],
-      onSelectList: fn(),
-      onSaveList: fn(),
-    });
+function isListData(object: object): object is ListData {
+  return object && "id" in object && "name" in object;
+}
+
+function App() {
+  const [avaiableLists, setAvaliableLists] = useState([]);
+  const [currentList, setCurrentList] = useState<{
+    id: number;
+    name: string;
+    entries: MovieEntry[];
+  }>({
+    id: 0,
+    name: "",
+    entries: [],
+  });
 
   useEffect(() => {
-    setCurrentMovieList(mockList1);
-  }, [mockList1]);
+    getAvaiableLists()
+      .then((response) => response.json())
+      .then((data) => setAvaliableLists(data));
+
+    if (currentList.id === 0 && avaiableLists.length) {
+      const firstList = avaiableLists[0];
+      if (isListData(firstList)) {
+        onSelectList(firstList.id, firstList.name);
+      }
+    }
+  }, []);
+
+  function onSelectList(id: number, name: string) {
+    getListEntries(id)
+      .then((response) => response.json())
+      .then((data) => setCurrentList({ id: id, name: name, entries: data }));
+  }
+
+  function onSaveList(id: number, order: number[]) {
+    saveList(id, order).then(
+      (response) => response.ok && alert(`Lista ${currentList.name} salva!`)
+    );
+  }
+
   return (
     <div className="main-screen">
       <MovieSearchSection
         onSearchMovie={searchMultipleMovies}
-        onGetMovie={getMovie}
+        onGetMovie={searchSingleMovie}
         onAddMovie={(card: MovieEntry) =>
-          alert("Adicionando " + card.title + " na lista")
+          addMovieToList(card, currentList.id)
+            .then((response) => response.json())
+            .then((data) =>
+              setCurrentList({
+                id: currentList.id,
+                name: currentList.name,
+                entries: data,
+              })
+            )
         }
-        onAddList={fn}
+        onAddList={(name: string) => {
+          addList(name)
+            .then((response) => response.json())
+            .then((data) => {
+              setAvaliableLists(data);
+            });
+        }}
       />
-      <MovieLineListSection {...currentMovieList} />
+      <MovieLineListSection
+        avaiableLists={avaiableLists}
+        currentList={currentList}
+        onSelectList={onSelectList}
+        onSaveList={onSaveList}
+      />
       <MovieCardListSection
-        movieList={currentMovieList?.currentList.entries}
+        movieList={currentList ? currentList.entries : []}
         onChangeListOrder={(index, operation) => {
           const newList = changeListOrder(
-            currentMovieList.currentList.entries,
+            currentList.entries,
             index,
             operation
           );
-          setCurrentMovieList({
-            ...currentMovieList,
-            currentList: {
-              ...currentMovieList.currentList,
-              entries: newList,
-            },
-          });
+          setCurrentList({ ...currentList, entries: newList });
         }}
       />
-      )
     </div>
   );
 }
