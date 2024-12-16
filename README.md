@@ -1,6 +1,8 @@
-# To-Watch (nome a definir)
+# To-Watch
 
 Um pequeno sistema para gerenciamento de listas de filmes / séries a assistir apoiado por dados do [IMDb](https://www.imdb.com/).
+
+![screenshot](https://github.com/user-attachments/assets/155a4c39-4645-4a3b-9ca3-1c398358e371)
 
 ## Membros do grupo
 
