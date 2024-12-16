@@ -4,7 +4,7 @@ import "./App.css";
 import { MovieSearchSection } from "./sections/MovieSearchSection/MovieSearchSection";
 import { MovieLineListSection } from "./sections/MovieLineListSection/MovieLineListSection";
 import { MovieCardListSection } from "./sections/MovieCardListSection/MovieCardListSection";
-import { ListData, MovieEntry } from "./interfaces";
+import { MovieEntry } from "./interfaces";
 import {
   addList,
   addMovieToList,
@@ -15,10 +15,6 @@ import {
   searchSingleMovie,
 } from "./requests";
 import { changeListOrder } from "./methods";
-
-function isListData(object: object): object is ListData {
-  return object && "id" in object && "name" in object;
-}
 
 function App() {
   const [avaiableLists, setAvaliableLists] = useState([]);
@@ -36,13 +32,6 @@ function App() {
     getAvaiableLists()
       .then((response) => response.json())
       .then((data) => setAvaliableLists(data));
-
-    if (currentList.id === 0 && avaiableLists.length) {
-      const firstList = avaiableLists[0];
-      if (isListData(firstList)) {
-        onSelectList(firstList.id, firstList.name);
-      }
-    }
   }, []);
 
   function onSelectList(id: number, name: string) {
