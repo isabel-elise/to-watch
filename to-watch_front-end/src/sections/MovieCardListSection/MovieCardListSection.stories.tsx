@@ -7,6 +7,7 @@ const meta = {
   component: MovieCardListSection,
   args: {
     onChangeListOrder: fn(),
+    onRemoveEntry: fn(),
   },
 } satisfies Meta<typeof MovieCardListSection>;
 

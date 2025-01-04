@@ -1,10 +1,8 @@
 import { fn } from "@storybook/test";
 import {
-  MovieEntry,
   SearchMultipleMoviesResult,
   SearchSingleMovieResult,
 } from "./interfaces";
-import { MovieLineListSectionProps } from "./sections/MovieLineListSection/MovieLineListSection";
 
 export const mockList1 = {
   onAddList: fn(),
@@ -61,9 +59,9 @@ export function searchMovieMock() {
           title: "Miraculous: Tales of Ladybug & Cat Noir",
           year: "2015",
           kind: "tv series",
-          coverUrl:
+          "cover url":
             "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
-          fullSizeCoverUrl:
+          "full-size cover url":
             "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
         },
         {
@@ -71,9 +69,9 @@ export function searchMovieMock() {
           title: "No Game, No Life",
           year: "2014",
           kind: "tv series",
-          coverUrl:
+          "cover url":
             "https://m.media-amazon.com/images/M/MV5BOTk5ZDZhNGUtMDM2OS00Y2RkLWEwMmQtODg4ZTZiMGY1ZjFjXkEyXkFqcGc@.jpg",
-          fullSizeCoverUrl:
+          "full-size cover url":
             "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
         },
         {
@@ -81,9 +79,9 @@ export function searchMovieMock() {
           title: "Miraculous: Tales of Ladybug & Cat Noir",
           year: "2015",
           kind: "tv series",
-          coverUrl:
+          "cover url":
             "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
-          fullSizeCoverUrl:
+          "full-size cover url":
             "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
         },
         {
@@ -91,9 +89,9 @@ export function searchMovieMock() {
           title: "No Game, No Life",
           year: "2014",
           kind: "tv series",
-          coverUrl:
+          "cover url":
             "https://m.media-amazon.com/images/M/MV5BOTk5ZDZhNGUtMDM2OS00Y2RkLWEwMmQtODg4ZTZiMGY1ZjFjXkEyXkFqcGc@.jpg",
-          fullSizeCoverUrl:
+          "full-size cover url":
             "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
         },
       ]);
@@ -110,12 +108,12 @@ export function getMovieMock() {
         title: "Miraculous: Tales of Ladybug & Cat Noir",
         year: "2015",
         kind: "tv series",
-        coverUrl:
+        "cover url":
           "https://m.media-amazon.com/images/M/MV5BODQ5NGFjZTQtNDkzNy00YWVjLWJiNGMtNTk1YzVmMmQ1YWQwXkEyXkFqcGc@.jpg",
         rating: "7.5",
         genres: "",
         plotOutline: "",
-        fullSizeCoverUrl: "",
+        "full-size cover url": "",
       });
     }, 300);
   });

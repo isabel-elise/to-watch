@@ -17,11 +17,22 @@
 .buttons-section {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 16px 0;
+  gap: 18px;
+}
+
+.change-order-buttons-section {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
   justify-content: center;
   gap: 12px;
 }
 
-.change-order-button {
+.change-order-button,
+.close-button {
   color: #232323;
   transition: transform 0.5s;
 }
@@ -29,4 +40,8 @@
 .change-order-button:hover {
   color: #f8f5f2;
   transform: scale(1.5);
+}
+
+.close-button:hover {
+  transform: scale(1.25);
 }

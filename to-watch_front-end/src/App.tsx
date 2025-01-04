@@ -10,6 +10,8 @@ import {
   addMovieToList,
   getAvaiableLists,
   getListEntries,
+  removeList,
+  removeMovieFromList,
   saveList,
   searchMultipleMovies,
   searchSingleMovie,
@@ -75,6 +77,11 @@ function App() {
         currentList={currentList}
         onSelectList={onSelectList}
         onSaveList={onSaveList}
+        onRemoveList={(id: number) => {
+          removeList(id)
+            .then((response) => response.json())
+            .then((data) => data && setAvaliableLists(data));
+        }}
       />
       <MovieCardListSection
         movieList={currentList ? currentList.entries : []}
@@ -86,6 +93,19 @@ function App() {
           );
           setCurrentList({ ...currentList, entries: newList });
         }}
+        onRemoveEntry={(id: number) =>
+          removeMovieFromList(id, currentList.id)
+            .then((response) => response.json())
+            .then(
+              (data) =>
+                data &&
+                setCurrentList({
+                  id: currentList.id,
+                  name: currentList.name,
+                  entries: data,
+                })
+            )
+        }
       />
     </div>
   );

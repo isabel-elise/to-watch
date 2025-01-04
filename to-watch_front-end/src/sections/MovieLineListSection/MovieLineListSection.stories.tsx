@@ -15,6 +15,7 @@ export const Default: Story = {
   args: {
     onSaveList: fn(),
     onSelectList: fn(),
+    onRemoveList: fn(),
     avaiableLists: [
       { id: 9090, name: "Lista 1" },
       { id: 123, name: "Lista 2" },

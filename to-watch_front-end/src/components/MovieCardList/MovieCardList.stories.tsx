@@ -7,6 +7,7 @@ const meta = {
   component: MovieCardList,
   args: {
     onChangeListOrder: fn(),
+    onRemoveEntry: fn(),
   },
 } satisfies Meta<typeof MovieCardList>;
 
@@ -18,7 +19,8 @@ export const Default: Story = {
   args: {
     movieCardList: [
       {
-        id: "2580046",
+        id: 2580046,
+        imdb_id: "",
         title: "Miraculous: Tales of Ladybug & Cat Noir",
         year: 2015,
         kind: "tv series",
@@ -27,7 +29,8 @@ export const Default: Story = {
         rating: 7.5,
       },
       {
-        id: " 3431758",
+        id: 3431758,
+        imdb_id: "",
         title: "No Game, No Life",
         year: 2014,
         kind: "tv series",

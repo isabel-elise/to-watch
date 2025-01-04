@@ -64,9 +64,9 @@ button.select-list {
   display: flex;
   height: 31px;
   padding: 7px 19px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  align-content: center;
   color: #b9e8e8;
   font-family: Kadwa;
   font-size: 12px;
@@ -98,4 +98,9 @@ button.selected {
   line-height: normal;
   border: 2px solid #b9e8e8;
   background: #b9e8e8;
+}
+button.selected:hover {
+  color: #f8f5f2;
+  border-color: #232323;
+  background-color: #f45d48;
 }

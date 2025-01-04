@@ -88,3 +88,26 @@ export function saveList(listID: number, order: number[]) {
 
   return response;
 }
+
+export function removeMovieFromList(movieID: number, listID: number) {
+  const response = fetch(`${api}/delete_movie/${listID}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: movieID }),
+  });
+
+  return response;
+}
+
+export function removeList(listID: number) {
+  const response = fetch(`${api}/delete_list/${listID}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response;
+}

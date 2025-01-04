@@ -1,7 +1,7 @@
 import { MovieLine } from "../../components/MovieLine/MovieLine";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { MovieList } from "../../interfaces";
-import { RiSave3Line } from "react-icons/ri";
+import { RiCloseCircleLine, RiSave3Line } from "react-icons/ri";
 
 import "./movieLineListSection.css";
 
@@ -10,6 +10,7 @@ export interface MovieLineListSectionProps {
   avaiableLists: { id: number; name: string }[];
   onSelectList: (id: number, name: string) => void;
   onSaveList: (id: number, order: number[]) => void;
+  onRemoveList: (id: number) => void;
 }
 
 export function MovieLineListSection({
@@ -17,6 +18,7 @@ export function MovieLineListSection({
   avaiableLists,
   onSelectList,
   onSaveList,
+  onRemoveList,
 }: MovieLineListSectionProps) {
   const [parent] = useAutoAnimate();
   return (
@@ -60,11 +62,15 @@ export function MovieLineListSection({
                       (currentList.id === list.id ? " selected" : "")
                     }
                     onClick={() =>
-                      list.id !== currentList.id &&
-                      onSelectList(list.id, list.name)
+                      list.id !== currentList.id
+                        ? onSelectList(list.id, list.name)
+                        : onRemoveList(list.id)
                     }
                   >
                     {list.name}
+                    {currentList.id === list.id && (
+                      <RiCloseCircleLine size="1.4em" />
+                    )}
                   </button>
                 );
               })}

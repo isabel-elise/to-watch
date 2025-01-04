@@ -1,5 +1,5 @@
 import { MovieCard } from "../MovieCard/MovieCard";
-import { RiArrowUpDoubleLine } from "react-icons/ri";
+import { RiArrowUpDoubleLine, RiCloseLargeLine } from "react-icons/ri";
 import { RiArrowUpSLine } from "react-icons/ri";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { RiArrowDownDoubleLine } from "react-icons/ri";
@@ -12,11 +12,13 @@ import { MovieEntry } from "../../interfaces";
 interface MovieCardListProps {
   movieCardList: MovieEntry[];
   onChangeListOrder: (index: number, operation: string) => void;
+  onRemoveEntry: (id: number) => void;
 }
 
 export function MovieCardList({
   movieCardList: list,
   onChangeListOrder,
+  onRemoveEntry,
 }: MovieCardListProps) {
   const [parent] = useAutoAnimate();
   return (
@@ -25,32 +27,39 @@ export function MovieCardList({
         return (
           <div className="list-card-container" key={entry.id}>
             <MovieCard {...entry} />
-            <IconContext.Provider
-              value={{ size: "1.25em", className: "change-order-button" }}
-            >
-              <section className="buttons-section">
-                {index !== 0 && (
-                  <>
-                    <RiArrowUpDoubleLine
-                      onClick={() => onChangeListOrder(index, "first")}
-                    />
-                    <RiArrowUpSLine
-                      onClick={() => onChangeListOrder(index, "up")}
-                    />
-                  </>
-                )}
-                {index !== list.length - 1 && (
-                  <>
-                    <RiArrowDownSLine
-                      onClick={() => onChangeListOrder(index, "down")}
-                    />
-                    <RiArrowDownDoubleLine
-                      onClick={() => onChangeListOrder(index, "last")}
-                    />
-                  </>
-                )}
-              </section>
-            </IconContext.Provider>
+
+            <section className="buttons-section">
+              <RiCloseLargeLine
+                className="close-button"
+                onClick={() => onRemoveEntry(entry.id)}
+              />
+              <IconContext.Provider
+                value={{ size: "1.25em", className: "change-order-button" }}
+              >
+                <section className="change-order-buttons-section">
+                  {index !== 0 && (
+                    <>
+                      <RiArrowUpDoubleLine
+                        onClick={() => onChangeListOrder(index, "first")}
+                      />
+                      <RiArrowUpSLine
+                        onClick={() => onChangeListOrder(index, "up")}
+                      />
+                    </>
+                  )}
+                  {index !== list.length - 1 && (
+                    <>
+                      <RiArrowDownSLine
+                        onClick={() => onChangeListOrder(index, "down")}
+                      />
+                      <RiArrowDownDoubleLine
+                        onClick={() => onChangeListOrder(index, "last")}
+                      />
+                    </>
+                  )}
+                </section>
+              </IconContext.Provider>
+            </section>
           </div>
         );
       })}
