@@ -49,43 +49,63 @@ export function MovieSearchSection({
   const [listCreationActive, setListCreationActive] = useState(false);
   const [newListName, setNewListname] = useState("");
 
+  const [loadingResults, setLoadingResults] = useState(false);
+  const [loadingMovieInfo, setLoadingMovieInfo] = useState(false);
+
   const [parent] = useAutoAnimate();
 
   useEffect(() => {
     if (selectedMovie !== "") {
+      setLoadingMovieInfo(true);
       onGetMovie(selectedMovie)
         .then((response) => response.json())
-        .then((data) => setMovieCard(searchResultToEntry(data)));
+        .then((data) => {
+          setLoadingMovieInfo(false);
+          setMovieCard(searchResultToEntry(data));
+        });
     }
   }, [selectedMovie, onGetMovie]);
 
   return (
     <section className="movie-search-section">
       <SearchBar
-        onSearchMovie={(keyword: string) =>
+        onSearchMovie={(keyword: string) => {
+          setLoadingResults(true);
           onSearchMovie(keyword)
             .then((response) => response.json())
             .then((data) => {
-              console.log(data);
+              setLoadingResults(false);
               setSearchResults(data);
-            })
-        }
+            });
+        }}
       />
       <section className="search-results-container" ref={parent}>
-        {searchResults.map((result) => (
-          <div
-            key={result.imdbID}
-            className="search-result"
-            onClick={() => setSelectedMovie(result.imdbID)}
-          >
-            <p>{result.title}</p>
-            <p>{result.year}</p>
-            <p>{result.kind}</p>
-          </div>
-        ))}
+        {loadingResults ? (
+          <span className="loading-results-text">Buscando resultados...</span>
+        ) : (
+          searchResults.map((result) => (
+            <div
+              key={result.imdbID}
+              className="search-result"
+              onClick={() => setSelectedMovie(result.imdbID)}
+            >
+              <p>{result.title}</p>
+              <p>{result.year}</p>
+              <p>{result.kind}</p>
+            </div>
+          ))
+        )}
       </section>
       <section className="selected-movie-container">
-        {isMovieEntry(movieCard) ? <MovieCard {...movieCard} /> : <></>}
+        {loadingMovieInfo ? (
+          <span className="loading-movieinfo-text">
+            Carregando informações da seleção...
+          </span>
+        ) : isMovieEntry(movieCard) ? (
+          <MovieCard {...movieCard} />
+        ) : (
+          <></>
+        )}
       </section>
 
       {!listCreationActive ? (

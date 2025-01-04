@@ -13,6 +13,7 @@
 
 .search-results-container {
   display: flex;
+  justify-content: space-around;
   height: 160px;
   flex-direction: column;
   align-items: flex-start;
@@ -51,6 +52,11 @@ p {
 
 .search-result:active {
   background: #696969;
+}
+
+.loading-results-text,
+.loading-movieinfo-text {
+  color: #f8f5f2;
 }
 
 .selected-movie-container {
