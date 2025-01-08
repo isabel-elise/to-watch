@@ -17,7 +17,7 @@ permissions:
 jobs:
 
   testWindows:
-    name: Test on Windows
+    name: Unit tests on Windows
     runs-on: windows-latest
 
     steps:
@@ -35,7 +35,7 @@ jobs:
         pytest --ignore=to-watch_back-end/notUnitTests
   
   testLinux:
-    name: Test on Linux
+    name: Unit tests on Linux
     runs-on: ubuntu-latest
 
     steps:
@@ -53,7 +53,7 @@ jobs:
         pytest --ignore=to-watch_back-end/notUnitTests
   
   testMac:
-    name: Test on MacOS
+    name: Unit tests on MacOS
     runs-on: macos-latest
 
     steps:
@@ -71,7 +71,7 @@ jobs:
         pytest --ignore=to-watch_back-end/notUnitTests
 
   coverageLinux:
-    name: Coverage on Linux
+    name: Unit test coverage on Linux
     runs-on: ubuntu-latest
 
     steps:
