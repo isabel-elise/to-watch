@@ -35,6 +35,27 @@ class TestMainProgram:
         list = self.main.getListInfo(id)
         assert list["name"] == "any list"
     
+    def test_user_can_delete_list(self):
+        id = self.main.createNewList(list_name="any list")
+        self.main.deleteList(id)
+        with pytest.raises(MainProgramException) as e:
+            self.main.getListInfo(id)
+        assert str(e.value) == "List id not found"
+
+    def test_user_cant_delete_invalid_list(self):
+        with pytest.raises(MainProgramException) as e:
+            self.main.deleteList(1)
+        assert str(e.value) == "List id not found"
+
+    def test_deleting_list_also_delete_any_movie_in_it(self):
+        idList = self.main.createNewList(list_name="any list")
+        idMovie = self.main.createNewMovie(title="any movie")
+        self.main.putMovieOnList(idMovie, idList)
+        self.main.deleteList(idList)
+        with pytest.raises(MainProgramException) as e:
+            self.main.getMovieInfo(idMovie)
+        assert str(e.value) == "Movie id not found"
+
     def test_user_cant_ask_for_invalid_list(self):
         with pytest.raises(MainProgramException) as e:
             self.main.getListInfo(1)
@@ -71,6 +92,11 @@ class TestMainProgram:
         self.main.removeMovieFromList(idMovie, idList)
         order = self.main.getListInfo(idList)["order"]
         assert len(order) == 0
+        
+        # expect movie to not exist after being deleted from list
+        with pytest.raises(MainProgramException) as e:
+            self.main.getMovieInfo(idMovie)
+        assert str(e.value) == "Movie id not found"
     
     def test_user_can_remove_movie_from_list_with_multiple_movies(self):
         idList = self.main.createNewList(list_name="any list")
