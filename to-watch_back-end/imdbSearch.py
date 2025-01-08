@@ -1,5 +1,8 @@
 from imdb import Cinemagoer
 
+class ImdbSearcherException(Exception):
+    pass
+
 class imdbSearcher:
     def __init__(self):
         self.ia = Cinemagoer()
@@ -40,7 +43,10 @@ class imdbSearcher:
         return returnVal
 
     def imdbSearchSingleMovie(self, imdbID):
-        movie = self.ia.get_movie(imdbID)
+        try:
+            movie = self.ia.get_movie(imdbID)
+        except:
+            raise ImdbSearcherException("Erro aleatorio ai")
         returnVal = dict()
 
         returnVal["imdbID"] = movie.getID()
