@@ -27,6 +27,7 @@ to-watch_front-end/*.sw?
 
 to-watch_back-end/venv
 to-watch_back-end/__pycache__
+to-watch_back-end/unitTests/__pycache__
 
 towatch.db
 
