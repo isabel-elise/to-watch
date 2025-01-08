@@ -7,7 +7,9 @@ class dbInterface(): # pragma: no cover
 
     def createNewMovie(self, title:str, year:int, kind:str, cover_url:str, imdb_id:str):
         raise NotImplementedError
-    
+    def deleteMovie(self, movie_id:int):
+        raise NotImplementedError
+
     def getMovieInfo(self, movie_id:int):
         raise NotImplementedError
     
@@ -30,6 +32,8 @@ class dbInterface(): # pragma: no cover
 
 
     def createNewList(self, list_name):
+        raise NotImplementedError
+    def deleteList(self, list_id:int):
         raise NotImplementedError
 
     def getAllListsIds(self):

@@ -80,6 +80,19 @@ class mainProgram:
     def createNewList(self, list_name:str):
         return self.db.createNewList(list_name=list_name)
 
+    def deleteList(self, list_id:int):
+        """
+        Delete this list and every movie in it
+        """
+        if list_id not in self.db.getAllListsIds():
+            raise MainProgramException("List id not found")
+        
+        order = self.db.getListOrder(list_id=list_id)
+        for movie_id in order:
+            self.removeMovieFromList(movie_id=movie_id, list_id=list_id)
+
+        self.db.deleteList(list_id=list_id)
+
     def editListName(self, new_list_name:str, list_id:int):
         if list_id not in self.db.getAllListsIds():
             raise MainProgramException("List id not found")
@@ -114,6 +127,7 @@ class mainProgram:
         newOrder = order.copy()
         newOrder.remove(movie_id)
         self.db.setListOrder(list_id=list_id, order=newOrder)
+        self.db.deleteMovie(movie_id=movie_id)
 
     def setNewOrderOnList(self, list_id:int, newOrder:list[int]):
         if list_id not in self.db.getAllListsIds():

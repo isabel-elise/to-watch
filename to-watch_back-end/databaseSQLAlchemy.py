@@ -54,7 +54,10 @@ class dbInterfaceSQLAlchemy(dbInterface):
         self.session.commit()
         id = movie.id
         return id
-    
+    def deleteMovie(self, movie_id):
+        self.session.query(Movie).filter(Movie.id == movie_id).delete()
+        self.session.commit()
+
     def getMovieInfo(self, movie_id:int):
         """
         Get the movie info from the database
@@ -123,6 +126,9 @@ class dbInterfaceSQLAlchemy(dbInterface):
         self.session.add(newList)
         self.session.commit()
         return newList.id
+    def deleteList(self, list_id):
+        self.session.query(List).filter(List.id == list_id).delete()
+        self.session.commit()
 
     def getAllListsIds(self):
         lists = self.session.query(List).all()
