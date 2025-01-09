@@ -128,6 +128,8 @@ def saveList(list_id:int):
 # Deleta elemento da lista
 @app.route("/remove_from_list/<list_id>/<movie_id>", methods=["DELETE"])
 def deleteMovieFromList(list_id:int, movie_id:int):
+    list_id = int(list_id)
+    movie_id = int(movie_id)
     try:
         mainProgram().removeMovieFromList(movie_id=movie_id, list_id=list_id)
     except MainProgramException as e:
@@ -139,6 +141,7 @@ def deleteMovieFromList(list_id:int, movie_id:int):
 # Deletar lista
 @app.route("/delete_list/<list_id>", methods=["DELETE"])
 def deleteList(list_id:int):
+    list_id = int(list_id)
     try:
         mainProgram().deleteList(list_id=list_id)
     except MainProgramException as e:
