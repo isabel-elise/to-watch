@@ -123,6 +123,28 @@ def saveList(list_id:int):
     return mainProgram().getListCompleteMovieData(list_id=list_id)
 
 
+# Deletar
+
+# Deleta elemento da lista
+@app.route("/remove_from_list/<list_id>/<movie_id>", methods=["DELETE"])
+def deleteMovieFromList(list_id:int, movie_id:int):
+    try:
+        mainProgram().removeMovieFromList(movie_id=movie_id, list_id=list_id)
+    except MainProgramException as e:
+        abort(400, str(e))
+
+    return mainProgram().getListCompleteMovieData(list_id=int(list_id))
+
+
+# Deletar lista
+@app.route("/delete_list/<list_id>", methods=["DELETE"])
+def deleteList(list_id:int):
+    try:
+        mainProgram().deleteList(list_id=list_id)
+    except MainProgramException as e:
+        abort(400, str(e))
+
+    return mainProgram().getAllListsIdsAndNamesInDatabase()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
