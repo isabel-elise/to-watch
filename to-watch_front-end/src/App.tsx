@@ -80,7 +80,16 @@ function App() {
         onRemoveList={(id: number) => {
           removeList(id)
             .then((response) => response.json())
-            .then((data) => data && setAvaliableLists(data));
+            .then((data) => {
+              if (data) {
+                setAvaliableLists(data);
+                setCurrentList({
+                  id: 0,
+                  name: "",
+                  entries: [],
+                });
+              }
+            });
         }}
       />
       <MovieCardListSection
