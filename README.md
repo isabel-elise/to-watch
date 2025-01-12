@@ -2,7 +2,7 @@
 
 Um pequeno sistema para gerenciamento de listas de filmes / séries a assistir apoiado por dados do [IMDb](https://www.imdb.com/).
 
-![screenshot](https://github.com/user-attachments/assets/155a4c39-4645-4a3b-9ca3-1c398358e371)
+![screenshot](https://github.com/user-attachments/assets/c909f9d8-bc17-45bd-9b81-2e670049421b)
 
 ## Membros do grupo
 
@@ -29,6 +29,10 @@ Encontre a produção desejada e adicone-a à lista atual para acompanhamento.
 Altere a ordem da lista atual como desejar a partir de diferentes opções para a mudança de posição de cada item:
 subir uma posição, descer uma posição, ir para o início, ir para o final.
 
+### Remoção de entradas e listas
+
+Remova filmes adicionados a uma lista e exclua listas criadas anteriormente.
+
 ## Tecnologias empregadas
 
 ### Interface
@@ -36,12 +40,16 @@ subir uma posição, descer uma posição, ir para o início, ir para o final.
 A interface da aplicação foi implementada em Typescript utilizando o framework [React](https://react.dev/) com o apoio do [Vite](https://vite.dev/).
 Também foi aplicada a ferramenta [StoryBook](https://storybook.js.org/) para a construção de componentes de forma isolada.
 
+### Testes do Frontend
+
+Testes de sistema foram realizados utilizando o [Selenium](https://www.selenium.dev/), um conjunto de ferramentas para automatização de navegadores web, com apoio do framework [Mocha](https://mochajs.org/), uma biblioteca JavaScript com execução serial de testes.
+
 ### Dados do IMDb
 
 Os dados do IMDb são obtidos através da biblioteca [Cinemagoer](https://cinemagoer.github.io/),
 um pacote Python para recuperação e gerenciamento de dados do banco de dados do IMDb sobre filmes, séries e pessoas.
 
-### Testes do backend
+### Testes do Backend
 
 Os testes foram feitos através das bibliotecas [pytest](https://pypi.org/project/pytest/) e [coverage](https://pypi.org/project/coverage/), e são executados no Ubuntu, MacOS e Windows, pelo Github Actions.
 
