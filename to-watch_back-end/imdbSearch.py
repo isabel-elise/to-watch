@@ -1,4 +1,4 @@
-from imdb import Cinemagoer
+from imdb import Cinemagoer, IMDbDataAccessError
 
 class ImdbSearcherException(Exception):
     pass
@@ -45,8 +45,8 @@ class imdbSearcher:
     def imdbSearchSingleMovie(self, imdbID):
         try:
             movie = self.ia.get_movie(imdbID)
-        except:
-            raise ImdbSearcherException("Erro aleatorio ai")
+        except IMDbDataAccessError:
+            raise ImdbSearcherException("Movie id not found")
         returnVal = dict()
 
         returnVal["imdbID"] = movie.getID()

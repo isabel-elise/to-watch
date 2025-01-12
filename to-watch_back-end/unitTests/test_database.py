@@ -5,7 +5,7 @@ from database import dbInterface
 # coverage run -m pytest ./to-watch_back-end/test_database.py 
 # coverage report
 
-class TestDatabase:
+class TestDatabase: # pragma: no cover
     @pytest.fixture(autouse=True)
     def setup__and_teardown(self):
         # setup code

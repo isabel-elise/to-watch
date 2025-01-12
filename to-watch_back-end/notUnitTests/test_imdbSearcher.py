@@ -1,7 +1,7 @@
 import pytest
 from imdbSearch import imdbSearcher, ImdbSearcherException
 
-class TestImdbSearcher:
+class TestImdbSearcher: # pragma: no cover
 
     def test_imdbSearcher_can_find_charlotte_anime(self):
         searcher = imdbSearcher()
