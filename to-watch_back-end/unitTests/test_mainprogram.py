@@ -4,7 +4,7 @@ from mainProgram import mainProgram, MainProgramException
 # coverage run -m pytest ./to-watch_back-end/test_mainprogram.py 
 # coverage report -m
 
-class TestMainProgram:
+class TestMainProgram: # pragma: no cover
     @pytest.fixture(autouse=True)
     def setup__and_teardown(self):
         # setup code
