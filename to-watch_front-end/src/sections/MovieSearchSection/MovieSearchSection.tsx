@@ -89,9 +89,9 @@ export function MovieSearchSection({
               className="search-result"
               onClick={() => setSelectedMovie(result.imdbID)}
             >
-              <p>{result.title}</p>
-              <p>{result.year}</p>
-              <p>{result.kind}</p>
+              <p className="search-result-title">{result.title}</p>
+              <p className="search-result-year">{result.year}</p>
+              <p className="search-result-kind">{result.kind}</p>
             </div>
           ))
         )}
