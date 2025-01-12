@@ -73,7 +73,7 @@ describe("System Tests", function () {
     equal("To-Watch", title);
   });
 
-  it("Searching for 'Matrix' movie should return results with 'Matrix' in title", async function () {
+  it("Searching for 'Matrix' movie should return results with 'Matrix' in the title", async function () {
     let searchBarInput = await driver.findElement(By.id("search-input"));
 
     await searchBarInput.sendKeys("Matrix");
@@ -125,7 +125,7 @@ describe("System Tests", function () {
     notEqual(0, selectedMovieIMDBScore.length);
   });
 
-  it("Creating a new list and selecting should be display the recentrly created list title", async function () {
+  it("Creating a new list and selecting it should display the recently created list title", async function () {
     let createListButton = await driver.findElement(By.id("create-list"));
     await createListButton.click();
 
