@@ -28,12 +28,8 @@ function installRequirements() {
 }
 
 function initializeDatabase() {
-  return new Promise((resolve) =>
-    setTimeout(
-      () => resolve(spawn("python3", ["../to-watch_back-end/app.py"])),
-      4000
-    )
-  );
+  const pid = spawn("python3", ["../to-watch_back-end/app.py"]);
+  return new Promise((resolve) => setTimeout(() => resolve(pid), 4000));
 }
 
 function installDependecies() {
@@ -42,9 +38,8 @@ function installDependecies() {
 }
 
 function initializeUserInterface() {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve(spawn("vite"), 2000))
-  );
+  const pid = spawn("vite");
+  return new Promise((resolve) => setTimeout(() => resolve(pid, 2000)));
 }
 
 describe("System Tests", function () {
@@ -70,86 +65,146 @@ describe("System Tests", function () {
     await driver.get(localUrl);
 
     let title = await driver.getTitle();
-    equal("To-Watch", title);
+    equal(title, "To-Watch");
   });
 
-  it("Searching for 'Matrix' movie should return results with 'Matrix' in the title", async function () {
-    let searchBarInput = await driver.findElement(By.id("search-input"));
+  describe("Search and Select operations", function () {
+    it("Searching for 'Matrix' movie should return results with 'Matrix' in the title", async function () {
+      let searchBarInput = await driver.findElement(By.id("search-input"));
 
-    await searchBarInput.sendKeys("Matrix");
-    await searchBarInput.sendKeys("\n");
+      await searchBarInput.sendKeys("Matrix");
+      await searchBarInput.sendKeys("\n");
 
-    await driver.sleep(3000);
+      await driver.sleep(3000);
 
-    let searchResultsTitles = await driver.findElements(
-      By.className("search-result-title")
-    );
+      let searchResultsTitles = await driver.findElements(
+        By.className("search-result-title")
+      );
 
-    let searchResultsTitlesText = await Promise.all(
-      searchResultsTitles.map((e) => e.getText())
-    );
+      let searchResultsTitlesText = await Promise.all(
+        searchResultsTitles.map((e) => e.getText())
+      );
 
-    notEqual(
-      0,
-      searchResultsTitlesText.filter((a) => textContainsWord(a, "Matrix"))
-        .length
-    );
+      notEqual(
+        searchResultsTitlesText.filter((a) => textContainsWord(a, "Matrix"))
+          .length,
+        0
+      );
+    });
+
+    it("Selecting a search result should bring up the movie information card with its title and imdb score", async function () {
+      let searchResults = await driver.findElements(
+        By.className("search-result")
+      );
+
+      let searchResult = searchResults[0];
+      let searchResultTitle = await searchResult
+        .findElement(By.className("search-result-title"))
+        .getText();
+      await searchResult.click();
+
+      await driver.sleep(7000);
+
+      let selectedMovieContainer = await driver.findElement(
+        By.className("selected-movie-container")
+      );
+
+      let selectedMovieTitle = await selectedMovieContainer
+        .findElement(By.className("movie-title"))
+        .getText();
+
+      let selectedMovieIMDBScore = await selectedMovieContainer
+        .findElement(By.className("imdb-score"))
+        .getText();
+
+      equal(selectedMovieTitle, searchResultTitle);
+      notEqual(selectedMovieIMDBScore.length, 0);
+    });
   });
 
-  it("Selecting a search result should bring up the movie information card with its title and imdb score", async function () {
-    let searchResults = await driver.findElements(
-      By.className("search-result")
-    );
+  describe("List and Movie operations", function () {
+    before(async function () {
+      let createListButton = await driver.findElement(By.id("create-list"));
+      await createListButton.click();
 
-    let searchResult = searchResults[0];
-    let searchResultTitle = await searchResult
-      .findElement(By.className("search-result-title"))
-      .getText();
-    await searchResult.click();
+      await driver.sleep(1000);
 
-    await driver.sleep(7000);
+      let listNameInput = await driver.findElement(By.id("list-name-input"));
+      await listNameInput.sendKeys("Clássicos");
 
-    let selectedMovieContainer = await driver.findElement(
-      By.className("selected-movie-container")
-    );
+      let addListButton = await driver.findElement(By.id("add-list"));
+      await addListButton.click();
 
-    let selectedMovieTitle = await selectedMovieContainer
-      .findElement(By.className("movie-title"))
-      .getText();
+      await driver.sleep(2000);
 
-    let selectedMovieIMDBScore = await selectedMovieContainer
-      .findElement(By.className("imdb-score"))
-      .getText();
+      let avaiableLists = await driver.findElements(
+        By.className("select-list")
+      );
+      let lastAddedList = avaiableLists[avaiableLists.length - 1];
+      await lastAddedList.click();
 
-    equal(searchResultTitle, selectedMovieTitle);
-    notEqual(0, selectedMovieIMDBScore.length);
-  });
+      await driver.sleep(1000);
+    });
 
-  it("Creating a new list and selecting it should display the recently created list title", async function () {
-    let createListButton = await driver.findElement(By.id("create-list"));
-    await createListButton.click();
+    after(async function () {
+      let removeListButton = await driver.findElement(
+        By.className("select-list selected")
+      );
+      await removeListButton.click();
+      await driver.sleep(1000);
+    });
 
-    await driver.sleep(1000);
+    it("Center section should display the current selected list title", async function () {
+      let selectedListTitle = await driver
+        .findElement(By.id("list-title"))
+        .getText();
 
-    let listNameInput = await driver.findElement(By.id("list-name-input"));
-    await listNameInput.sendKeys("Clássicos");
+      equal(selectedListTitle, "Clássicos");
+    });
 
-    let addListButton = await driver.findElement(By.id("add-list"));
-    //await addListButton.click();
+    it("Adding the selected movie to the current selected list should display its title on center list", async function () {
+      let addMovieButton = await driver.findElement(By.id("add-movie"));
+      await addMovieButton.click();
 
-    await driver.sleep(2000);
+      await driver.sleep(4000);
 
-    let avaiableLists = await driver.findElements(By.className("select-list"));
-    let lastAddedList = avaiableLists[avaiableLists.length - 1];
-    await lastAddedList.click();
+      let movieListed = await driver.findElement(
+        By.className("line-text line-title")
+      );
+      let movieListedTitle = await movieListed.getText();
 
-    await driver.sleep(1000);
+      equal(movieListedTitle, "The Matrix");
+    });
 
-    let selectedListTitle = await driver
-      .findElement(By.id("list-title"))
-      .then((element) => element.getText());
+    it("The movie listed should display a card containing its title and imdb score", async function () {
+      let movieCardSection = await driver.findElement(
+        By.className("movie-card-list-section")
+      );
+      let movieCardTitle = await movieCardSection
+        .findElement(By.className("movie-title"))
+        .getText();
+      let movieCardIMDBScore = await movieCardSection
+        .findElement(By.className("imdb-score"))
+        .getText();
 
-    equal(selectedListTitle, "Clássicos");
+      equal(movieCardTitle, "The Matrix");
+      notEqual(movieCardIMDBScore.length, 0);
+    });
+
+    it("Removing the movie from the current selected list should remove its title from center list", async function () {
+      let removeMovieButton = await driver.findElement(
+        By.className("close-button")
+      );
+      await removeMovieButton.click();
+
+      await driver.sleep(2000);
+
+      let moviesListed = await driver.findElements(
+        By.className("line-text line-title")
+      );
+
+      equal(moviesListed.length, 0);
+    });
   });
 });
 
