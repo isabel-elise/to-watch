@@ -12,7 +12,7 @@ export function MovieCard({
   return (
     <div className="card-container" key={id}>
       <header className="card-header">
-        <h1>{title}</h1>
+        <h1 className="movie-title">{title}</h1>
         <h1 className="imdb-score">{rating}</h1>
       </header>
       <section className="card-body">

@@ -26,7 +26,7 @@ export function MovieLineListSection({
       {currentList && currentList.entries && (
         <>
           <header className="movie-line-list-header">
-            <div>{currentList && currentList.name}</div>
+            <div id="list-title">{currentList && currentList.name}</div>
             <button
               id="save-list"
               onClick={() => {
